@@ -20,16 +20,14 @@ class Motor:
         self.pwm.duty_u16(int(65535 * speed / 100))
 
 # Set the two motors information, detailed PIN number subject to change here
-motor_left = Motor(dirPin=4, PWMPin=5)  # Motor 1 is controlled from Motor Driv2 #1, which is on GP4/5
-motor_right = Motor(dirPin=4, PWMPin=5)
+# motor_left = Motor(dirPin=4, PWMPin=5)  # Motor 1 is controlled from Motor Driv2 #1, which is on GP4/5
+# motor_right = Motor(dirPin=4, PWMPin=5)
 
-def go_forward(motor_left, motor_right):
-    speed = 30 
+def go_forward(motor_left, motor_right, speed):
     motor_left.Forward(speed)
     motor_right.Forward(speed)
     
-def go_back(motor_left, motor_right):
-    speed = 30 
+def go_back(motor_left, motor_right, speed):
     motor_left.Reverse(speed)
     motor_right.Reverse(speed)
 
