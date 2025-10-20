@@ -9,7 +9,7 @@ def straight_line_detection():
     led_pin = 28
     led = Pin(led_pin, Pin.OUT)
 
-    #Set the line sensor pin, sensor 2 and 3 are in the middle, 4 and 1 are offset to left and right respectively
+    #Set the line sensor pin, sensor 3 is in the front middle, sensor 2 is in the back middle, 4 and 1 are offset to left and right respectively
     sensor1_pin = 12
     sensor1 = Pin(sensor1_pin, Pin.IN, Pin.PULL_DOWN)
     sensor2_pin = 12
