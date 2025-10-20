@@ -1,5 +1,5 @@
 from machine import Pin, PWM
-from utime import sleep
+from time import sleep
 
 class Motor:
     def __init__(self, dirPin, PWMPin):

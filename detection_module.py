@@ -1,5 +1,5 @@
 from machine import Pin, I2C
-from utime import sleep
+from time import sleep
 from libs.tiny_code_reader.tiny_code_reader import TinyCodeReader
 from libs.VL53L0X.VL53L0X import VL53L0X
 

@@ -1,5 +1,4 @@
 from machine import Pin, PWM
-from utime import sleep
 import detection_module
 import motion_control
 
