@@ -6,7 +6,7 @@ from time import sleep
 
 def start_sequence():
     motion_control.go_forward(50)
-    sleep(2)  # Move forward for 2 seconds
+    sleep(1)  # Move forward for 2 seconds
 
     #now stop when black line is detected
 
@@ -18,7 +18,7 @@ def start_sequence():
 
     motion_control.turn_left_90()
 
-    # Now once again move forward until the black line is detected again
+    # Now move forward until the black line is detected again
 
     motion_control.go_forward(50)
     while detection_module.straight_line_detection():
@@ -31,5 +31,53 @@ def start_sequence():
 
     # Note that this is very rough, and will depend greatly on testing and postion of the line sensors on the bot. 
     # May need to slightly adjust the bot before turning due to sensor placement
-    # Also i think it would be better if the left and right sensors were aligned with the centre of the bot rather than towards
-    # the front so that we dont need to adjust before turning
+
+# Default path for normal operation from zone 1 to zone 4
+
+def default_path():
+    # read qr code in zone 1
+    # if qr code isnt read, go to zone 2
+    # otherwise end default path and follow qr code instructions
+    # then turn towards zone 2 and read qr code there
+    # repeat process for zones 3 and 4. then return to zone 1 if nothing in zone 4
+    code = detection_module.qr_code_reader()
+    if code is None:
+        motion_control.turn_left_90()
+        while detection_module.distance_sensing() > 100:
+            motion_control.go_forward(50)
+        motion_control.stop_the_car()
+        motion_control.turn_right_90()
+        code = detection_module.qr_code_reader()
+        if code is None:
+            motion_control.turn_left_90()
+            while detection_module.distance_sensing() > 50:
+                motion_control.go_forward(50)
+            motion_control.stop_the_car()
+            motion_control.turn_right_90()
+            code = detection_module.qr_code_reader()
+            if code is None:
+                motion_control.turn_left_90()
+                while detection_module.distance_sensing() > 25:
+                    motion_control.go_forward(50)
+                motion_control.stop_the_car()
+                motion_control.turn_right_90()
+                code = detection_module.qr_code_reader()
+                if code is None:
+                    print("No QR codes found in any zone, returning to zone 1")
+                    motion_control.turn_right_90()
+                    while detection_module.distance_sensing() > 25:
+                        motion_control.go_forward(50)
+                    motion_control.stop_the_car()
+                    motion_control.turn_left_90()
+                else:
+                    print(f"QR code found in zone 4: {code}")
+            else:
+                print(f"QR code found in zone 3: {code}")
+        else:
+            print(f"QR code found in zone 2: {code}")
+    else:
+        print(f"QR code found in zone 1: {code}")
+
+
+
+ 

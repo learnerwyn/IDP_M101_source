@@ -37,7 +37,7 @@ def stop_the_car(motor_left, motor_right):
 
 def turn_right_90(motor_left, motor_right):
     
-    print("Trun Right Start")
+    print("Turn Right Start")
     speed = 30 # speed subject to adjustment
     motor_left.Forward(speed)
     motor_right.Reverse(speed)
