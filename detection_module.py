@@ -8,7 +8,7 @@ def straight_line_detection():
     #Set the LED pin and configuration
     led_pin = 28
     led = Pin(led_pin, Pin.OUT)
-
+    
     #Set the line sensor pin, sensor 3 is in the front middle, sensor 2 is in the back middle, 4 and 1 are offset to left and right respectively
     sensor1_pin = 12
     sensor1 = Pin(sensor1_pin, Pin.IN, Pin.PULL_DOWN)
@@ -18,16 +18,21 @@ def straight_line_detection():
     sensor3 = Pin(sensor1_pin, Pin.IN, Pin.PULL_DOWN)
     sensor4_pin = 12
     sensor4 = Pin(sensor1_pin, Pin.IN, Pin.PULL_DOWN)
-
-    #Continiously update the LED value and print said value
+    
     straight = None
+    temp = None
     if sensor2.value() == sensor3.value() and sensor1.value() == sensor4.value() and sensor1.value() != sensor2.value():
         led.value(1) # light up the LED if walking in a straight line
         straight = True
     else:
         led.value(0)
         straight = False
-    return straight 
+        if sensor4.value() == 1 and sensor3.value() == sensor1.value() == 0:
+            temp = "right_detected"
+        elif sensor1.value() == 1 and sensor3.value() == sensor4.value() == 0:
+            temp = "left_detected"
+    
+    return straight, temp
         
 
 def qr_code_reader():
