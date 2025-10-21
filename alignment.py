@@ -19,4 +19,3 @@ def align_to_line(motor_left, motor_right):
             print("Line detected on the right. Adjusting position...")
             motion_control.adjust_to_right(motor_left, motor_right)  # Turn right slightly
         
- 
