@@ -37,7 +37,7 @@ def start_sequence():
 def default_path():
     # read qr code in zone 1
     # if qr code isnt read, go to zone 2
-    # otherwise end default path and follow qr code instructions
+    # otherwise end default path and leave default path function
     # then turn towards zone 2 and read qr code there
     # repeat process for zones 3 and 4. then return to zone 1 if nothing in zone 4
     motion_control.go_forward(50)
