@@ -69,27 +69,17 @@ def turn_around(motor_left, motor_right):
     print("Turn Around Finish")
     
 def adjust_to_left(motor_left, motor_right):
-    
+    # After calling this adjustment module, keeping walking straight
     print("Adjusting position")
     motor_left.Forward(10)
     motor_right.Forward(30)
     sleep(0.5)
-    motor_left.Forward(30)
-    motor_right.Forward(10)
-    sleep(0.5)
-    # motor_left.off
-    # motor_right.off
     print("Position adjustment finished")
     
 def adjust_to_right(motor_left, motor_right):
-    
+    # After calling this adjustment module, keeping walking straight
     print("Adjusting position")
     motor_left.Forward(30)
     motor_right.Forward(10)
     sleep(0.5)
-    motor_left.Forward(10)
-    motor_right.Forward(30)
-    sleep(0.5)
-    # motor_left.off
-    # motor_right.off
     print("Position adjustment finished")
