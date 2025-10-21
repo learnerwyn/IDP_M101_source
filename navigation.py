@@ -40,32 +40,56 @@ def default_path():
     # otherwise end default path and follow qr code instructions
     # then turn towards zone 2 and read qr code there
     # repeat process for zones 3 and 4. then return to zone 1 if nothing in zone 4
+    motion_control.go_forward(50)
+    sleep(1)
+    motion_control.stop_the_car()
     code = detection_module.qr_code_reader()
     if code is None:
+        motion_control.go_back(50)
+        sleep(1)
+        motion_control.stop_the_car()
         motion_control.turn_left_90()
-        while detection_module.distance_sensing() > 100:
+        while detection_module.distance_sensing() > 1850:
             motion_control.go_forward(50)
         motion_control.stop_the_car()
         motion_control.turn_right_90()
+        motion_control.go_forward(50)
+        sleep(1)
+        motion_control.stop_the_car()
         code = detection_module.qr_code_reader()
         if code is None:
+            motion_control.go_back(50)
+            sleep(1)
+            motion_control.stop_the_car()
             motion_control.turn_left_90()
-            while detection_module.distance_sensing() > 50:
+            while detection_module.distance_sensing() > 400:
                 motion_control.go_forward(50)
             motion_control.stop_the_car()
             motion_control.turn_right_90()
+            motion_control.go_forward(50)
+            sleep(1)
+            motion_control.stop_the_car()
             code = detection_module.qr_code_reader()
             if code is None:
+                motion_control.go_back(50)
+                sleep(1)
+                motion_control.stop_the_car()
                 motion_control.turn_left_90()
-                while detection_module.distance_sensing() > 25:
+                while detection_module.distance_sensing() > 100:
                     motion_control.go_forward(50)
                 motion_control.stop_the_car()
                 motion_control.turn_right_90()
+                motion_control.go_forward(50)
+                sleep(1)
+                motion_control.stop_the_car()
                 code = detection_module.qr_code_reader()
                 if code is None:
                     print("No QR codes found in any zone, returning to zone 1")
+                    motion_control.go_back(50)
+                    sleep(1)
+                    motion_control.stop_the_car()
                     motion_control.turn_right_90()
-                    while detection_module.distance_sensing() > 25:
+                    while detection_module.distance_sensing() > 100:
                         motion_control.go_forward(50)
                     motion_control.stop_the_car()
                     motion_control.turn_left_90()
@@ -77,6 +101,8 @@ def default_path():
             print(f"QR code found in zone 2: {code}")
     else:
         print(f"QR code found in zone 1: {code}")
+
+
 
 
 
