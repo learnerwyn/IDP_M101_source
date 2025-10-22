@@ -104,6 +104,279 @@ def default_path(motor_left, motor_right):
 
 
 
+# Sequence for when QR code is found to pick up and drop off the item
+
+def unloading_sequence(motor_left, motor_right, code):
+    print(f"Starting unloading sequence for QR code: {code}")
+
+    # Placeholder for pickup mechanism
+
+    print("Activating pickup mechanism")
+    sleep(2)  # Simulate time taken for pickup
+    print("Pickup complete")
+
+    motion_control.go_back(motor_left, motor_right, 50)
+    sleep(1)
+    motion_control.stop_the_car(motor_left, motor_right)
+
+    # Move to drop-off zone based on QR code data
+    if "Rack A" in code:
+        print("Moving to Rack A drop-off zone")
+        motion_control.turn_right_90(motor_left, motor_right)
+        while detection_module.distance_sensing() > 100:
+            motion_control.go_forward(motor_left, motor_right, 50)
+        motion_control.stop_the_car(motor_left, motor_right)
+        motion_control.turn_right_90(motor_left, motor_right)
+
+    elif "Rack B" in code:
+        print("Moving to Rack B drop-off zone")
+        motion_control.turn_left_90(motor_left, motor_right)
+        while detection_module.distance_sensing() > 100:
+            motion_control.go_forward(motor_left, motor_right, 50)
+        motion_control.stop_the_car(motor_left, motor_right)
+        motion_control.turn_left_90(motor_left, motor_right)
+
+    else:
+        print("Unknown drop-off zone in QR code, returning to default path")
+        motion_control.go_forward(motor_left, motor_right, 50)
+        sleep(1)
+        motion_control.stop_the_car(motor_left, motor_right)
+
+        #placeholder for drop-off mechanism
+
+        print("Activating drop-off mechanism")
+        sleep(2)  # Simulate time taken for drop-off
+        print("Drop-off complete")
+
+    if "Lower" in code:
+        # Placeholder for raising forklift to correct height
+        print("Raising forklift to lower shelf height")
+        sleep(2)  # Simulate time taken to raise forklift
+
+        if "1" in code:
+            while detection_module.distance_sensing() > 1000:
+                motion_control.go_forward(motor_left, motor_right, 50)
+            motion_control.stop_the_car(motor_left, motor_right)
+
+        elif "2" in code:
+            while detection_module.distance_sensing() > 800:
+                motion_control.go_forward(motor_left, motor_right, 50)
+            motion_control.stop_the_car(motor_left, motor_right)
+
+        elif "3" in code:
+            while detection_module.distance_sensing() > 600:
+                motion_control.go_forward(motor_left, motor_right, 50)
+            motion_control.stop_the_car(motor_left, motor_right)
+        
+        elif "4" in code:
+            while detection_module.distance_sensing() > 400:
+                motion_control.go_forward(motor_left, motor_right, 50)
+            motion_control.stop_the_car(motor_left, motor_right)
+
+        elif "5" in code:
+            while detection_module.distance_sensing() > 200:
+                motion_control.go_forward(motor_left, motor_right, 50)
+            motion_control.stop_the_car(motor_left, motor_right)
+        
+        elif "6" in code:
+            while detection_module.distance_sensing() > 100:
+                motion_control.go_forward(motor_left, motor_right, 50)
+            motion_control.stop_the_car(motor_left, motor_right)
+
+        else:
+            print("Oh no very bad")
+        
+        if "Rack A" in code:
+            motion_control.turn_right_90(motor_left, motor_right)
+        
+        elif "Rack B" in code:
+            motion_control.turn_left_90(motor_left, motor_right)
+
+        else:
+            print("Bad news bears")
+    
+        motion_control.go_forward(motor_left, motor_right, 50)
+        sleep(1)
+        motion_control.stop_the_car(motor_left, motor_right)
+
+        # Placeholder for drop-off mechanism
+        print("Activating drop-off mechanism")
+        sleep(2)  # Simulate time taken for drop-off
+        print("Drop-off complete")
+
+    elif "Upper" in code:
+        while detection_module.distance_sensing() > 50:
+            motion_control.go_forward(motor_left, motor_right, 50)
+        motion_control.stop_the_car(motor_left, motor_right)
+
+        if "Rack A" in code:
+            motion_control.turn_right_90(motor_left, motor_right)
+            while detection_module.distance_sensing() > 1000:
+                motion_control.go_forward(motor_left, motor_right, 50)
+            motion_control.stop_the_car(motor_left, motor_right)
+            motion_control.turn_right_90(motor_left, motor_right)
+
+        elif "Rack B" in code:
+            motion_control.turn_left_90(motor_left, motor_right)
+            while detection_module.distance_sensing() > 1000:
+                motion_control.go_forward(motor_left, motor_right, 50)
+            motion_control.stop_the_car(motor_left, motor_right)
+            motion_control.turn_left_90(motor_left, motor_right)
+
+        else:
+            print("Now we're really in trouble")
+
+        while detection_module.distance_sensing() > 50 or detection_module.distance_sensing() is None:
+            motion_control.go_forward(motor_left, motor_right, 100)
+        motion_control.stop_the_car(motor_left, motor_right)
+
+        if "Rack A" in code:
+            motion_control.turn_right_90(motor_left, motor_right)
+            while detection_module.distance_sensing() > 100:
+                motion_control.go_forward(motor_left, motor_right, 50)
+            motion_control.stop_the_car(motor_left, motor_right)
+            motion_control.turn_right_90(motor_left, motor_right)
+            
+        elif "Rack B" in code:
+            motion_control.turn_left_90(motor_left, motor_right)
+            while detection_module.distance_sensing() > 100:
+                motion_control.go_forward(motor_left, motor_right, 50)
+            motion_control.stop_the_car(motor_left, motor_right)
+            motion_control.turn_left_90(motor_left, motor_right)
+
+        else:
+            print("This is getting out of hand")
+
+        if "1" in code:
+            while detection_module.distance_sensing() > 1000:
+                motion_control.go_forward(motor_left, motor_right, 50)
+            motion_control.stop_the_car(motor_left, motor_right)
+
+        elif "2" in code:
+            while detection_module.distance_sensing() > 800:
+                motion_control.go_forward(motor_left, motor_right, 50)
+            motion_control.stop_the_car(motor_left, motor_right)
+        
+        elif "3" in code:
+            while detection_module.distance_sensing() > 600:
+                motion_control.go_forward(motor_left, motor_right, 50)
+            motion_control.stop_the_car(motor_left, motor_right)
+
+        elif "4" in code:
+            while detection_module.distance_sensing() > 400:
+                motion_control.go_forward(motor_left, motor_right, 50)
+            motion_control.stop_the_car(motor_left, motor_right)
+
+        elif "5" in code:
+            while detection_module.distance_sensing() > 200:
+                motion_control.go_forward(motor_left, motor_right, 50)
+            motion_control.stop_the_car(motor_left, motor_right)
+
+        elif "6" in code:
+            while detection_module.distance_sensing() > 100:
+                motion_control.go_forward(motor_left, motor_right, 50)
+            motion_control.stop_the_car(motor_left, motor_right)
+
+        else:
+            print("We are doomed")
+
+        if "Rack A" in code:
+            motion_control.turn_left_90(motor_left, motor_right)
+
+        elif "Rack B" in code:
+            motion_control.turn_right_90(motor_left, motor_right)
+
+        else:
+            print("Help me")
+
+        motion_control.go_forward(motor_left, motor_right, 50)
+        sleep(1)
+        motion_control.stop_the_car(motor_left, motor_right)
+
+        # Placeholder for drop-off mechanism
+        print("Activating drop-off mechanism")
+        sleep(2)  # Simulate time taken for drop-off
+        print("Drop-off complete")
+
+        motion_control.go_back(motor_left, motor_right, 50)
+        sleep(1)
+        motion_control.stop_the_car(motor_left, motor_right)
 
 
- 
+    else:
+        print("Invalid level in QR code, aborting unloading sequence")
+
+def return_sequence(motor_left, motor_right, code, sensor1, sensor2, sensor3, sensor4):
+    print("Returning to starting area")
+
+    if "Rack A" in code:
+        motion_control.turn_left_90(motor_left, motor_right)
+
+    elif "Rack B" in code:
+        motion_control.turn_right_90(motor_left, motor_right)
+
+    else:   
+        print("We are cooked")
+
+    if "Lower" in code:
+        while detection_module.distance_sensing() < 1850:
+            motion_control.go_back(motor_left, motor_right, 50)
+        motion_control.stop_the_car(motor_left, motor_right)
+
+        if "Rack A" in code:
+            motion_control.turn_around(motor_left, motor_right)
+
+        elif "Rack B" in code:
+            motion_control.turn_left(motor_left, motor_right)
+            while detection_module.distance_sensing() > 100:
+                motion_control.go_forward(motor_left, motor_right, 50)
+            motion_control.stop_the_car(motor_left, motor_right)
+            motion_control.turn_left_90(motor_left, motor_right)
+
+        else:
+            print("Oh no we're lost")
+    
+    elif "Upper" in code:
+        while detection_module.distance_sensing() > 100:
+            motion_control.go_forward(motor_left, motor_right, 50)
+        motion_control.stop_the_car(motor_left, motor_right)
+
+        if "Rack A" in code:
+            motion_control.turn_left_90(motor_left, motor_right)
+            while detection_module.distance_sensing() > 500:
+                motion_control.go_forward(motor_left, motor_right, 50)
+            motion_control.stop_the_car(motor_left, motor_right)
+            motion_control.turn_left_90(motor_left, motor_right)
+
+        elif "Rack B" in code:
+            motion_control.turn_right_90(motor_left, motor_right)
+            while detection_module.distance_sensing() > 500:
+                motion_control.go_forward(motor_left, motor_right, 50)
+            motion_control.stop_the_car(motor_left, motor_right)
+            motion_control.turn_right_90(motor_left, motor_right)
+
+        else:
+            print("Now we're really in trouble")
+
+        while sensor1.value() == 0 or sensor4.value() == 0:
+            motion_control.go_forward(motor_left, motor_right, 20)
+        motion_control.stop_the_car(motor_left, motor_right)
+
+        while detection_module.distance_sensing() > 200:
+            motion_control.go_forward(motor_left, motor_right, 20)
+        motion_control.stop_the_car(motor_left, motor_right)
+        motion_control.turn_left_90(motor_left, motor_right)
+
+        while detection_module.distance_sensing() > 200:
+            motion_control.go_forward(motor_left, motor_right, 50)
+        motion_control.stop_the_car(motor_left, motor_right)
+        motion_control.turn_right_90(motor_left, motor_right)
+
+        while detection_module.distance_sensing() < 1850:
+            motion_control.go_back(motor_left, motor_right, 50)
+        motion_control.stop_the_car(motor_left, motor_right)
+        motion_control.turn_around(motor_left, motor_right)
+
+    else:
+        print("Something has gone terribly wrong")
+    

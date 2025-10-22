@@ -23,7 +23,7 @@ def test2(motor_left, motor_right):
     sleep(5)
     turn_around(motor_left, motor_right)
     
-def test3():
+def test3(motor_left, motor_right):
     # test 3: adjust the car to the left and right
     go_forward(motor_left, motor_right, 30)
     sleep(3)
