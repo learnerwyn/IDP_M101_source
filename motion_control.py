@@ -1,6 +1,15 @@
 from machine import Pin, PWM
 from time import sleep
 
+def general_push_button():
+    #Set the button pin
+    button_pin = 12
+    button = Pin(button_pin, Pin.IN, Pin.PULL_DOWN)
+    bot_state = False
+    if button.value() == 1:
+        bot_state = True
+    return bot_state
+
 class Motor:
     def __init__(self, dirPin, PWMPin):
         self.mDir = Pin(dirPin, Pin.OUT)  # set motor direction pin
