@@ -5,9 +5,6 @@ from libs.VL53L0X.VL53L0X import VL53L0X
 
 
 def straight_line_detection():
-    #Set the LED pin and configuration
-    led_pin = 28
-    led = Pin(led_pin, Pin.OUT)
     
     #Set the line sensor pin, sensor 3 is in the front middle, sensor 2 is in the back middle, 4 and 1 are offset to left and right respectively
     sensor1_pin = 12
@@ -22,10 +19,8 @@ def straight_line_detection():
     straight = None
     temp = None
     if sensor2.value() == sensor3.value() and sensor1.value() == sensor4.value() and sensor1.value() != sensor2.value():
-        led.value(1) # light up the LED if walking in a straight line
         straight = True
     else:
-        led.value(0)
         straight = False
         if sensor4.value() == 1 and sensor3.value() == sensor1.value() == 0:
             temp = "right_detected"
@@ -37,7 +32,11 @@ def straight_line_detection():
 
 def qr_code_reader():
     print("Starting tiny code reader...")
-
+    # turn a led on when the qr code reader is on, pin subject to adjustment
+    led_pin = 28  # Pin 28 = GP28 (labelled 34 on the jumper)
+    led = Pin(led_pin, Pin.OUT)
+    led.value(1)
+    
     # Set up for the Pico, pin numbers will vary across boards.
     i2c_bus = I2C(id=0, scl=Pin(17), sda=Pin(16), freq=400000) # I2C0 on GP16 & GP17
 
@@ -60,6 +59,7 @@ def qr_code_reader():
         
         code = tiny_code_reader.poll()
         if code is not None:
+            led.value(0)
             print(f"Code found: {code}")
             
     return code

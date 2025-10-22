@@ -1,6 +1,15 @@
 from machine import Pin, PWM
 from time import sleep
 
+def general_push_button():
+    #Set the button pin
+    button_pin = 12
+    button = Pin(button_pin, Pin.IN, Pin.PULL_DOWN)
+    bot_state = False
+    if button.value() == 1:
+        bot_state = True
+    return bot_state
+
 class Motor:
     def __init__(self, dirPin, PWMPin):
         self.mDir = Pin(dirPin, Pin.OUT)  # set motor direction pin
@@ -24,18 +33,37 @@ class Motor:
 # motor_right = Motor(dirPin=4, PWMPin=5)
 
 def go_forward(motor_left, motor_right, speed):
+    # turn a led on when one motor is on, pin subject to adjustment
+    led_pin = 27  # Pin 28 = GP28 (labelled 34 on the jumper)
+    led = Pin(led_pin, Pin.OUT)
+    led.value(1)
+    
     motor_left.Forward(speed)
     motor_right.Forward(speed)
     
 def go_back(motor_left, motor_right, speed):
+    # turn a led on when one motor is on, pin subject to adjustment
+    led_pin = 27  # Pin 28 = GP28 (labelled 34 on the jumper)
+    led = Pin(led_pin, Pin.OUT)
+    led.value(1)
+    
     motor_left.Reverse(speed)
     motor_right.Reverse(speed)
 
 def stop_the_car(motor_left, motor_right):
+    # turn a led off when no motors are on, pin subject to adjustment
+    led_pin = 27  # Pin 28 = GP28 (labelled 34 on the jumper)
+    led = Pin(led_pin, Pin.OUT)
+    led.value(0)
+    
     motor_left.off
     motor_right.off
 
 def turn_right_90(motor_left, motor_right):
+    # turn a led on when one motor is on, pin subject to adjustment
+    led_pin = 27  # Pin 28 = GP28 (labelled 34 on the jumper)
+    led = Pin(led_pin, Pin.OUT)
+    led.value(1)
     
     print("Turn Right Start")
     speed = 30 # speed subject to adjustment
@@ -47,6 +75,10 @@ def turn_right_90(motor_left, motor_right):
     print("Turn Right Finish")
     
 def turn_left_90(motor_left, motor_right):
+    # turn a led on when one motor is on, pin subject to adjustment
+    led_pin = 27  # Pin 28 = GP28 (labelled 34 on the jumper)
+    led = Pin(led_pin, Pin.OUT)
+    led.value(1)
     
     print("Trun Left Start")
     speed = 30 # speed subject to adjustment
@@ -58,6 +90,10 @@ def turn_left_90(motor_left, motor_right):
     print("Turn Left Finish")
     
 def turn_around(motor_left, motor_right):
+    # turn a led on when one motor is on, pin subject to adjustment
+    led_pin = 27  # Pin 28 = GP28 (labelled 34 on the jumper)
+    led = Pin(led_pin, Pin.OUT)
+    led.value(1)
     
     print("Trun Around Start")
     speed = 30 # speed subject to adjustment
@@ -69,6 +105,11 @@ def turn_around(motor_left, motor_right):
     print("Turn Around Finish")
     
 def adjust_to_left(motor_left, motor_right):
+    # turn a led on when one motor is on, pin subject to adjustment
+    led_pin = 27  # Pin 28 = GP28 (labelled 34 on the jumper)
+    led = Pin(led_pin, Pin.OUT)
+    led.value(1)
+    
     # After calling this adjustment module, keeping walking straight
     print("Adjusting position")
     motor_left.Forward(10)
@@ -77,6 +118,11 @@ def adjust_to_left(motor_left, motor_right):
     print("Position adjustment finished")
     
 def adjust_to_right(motor_left, motor_right):
+    # turn a led on when one motor is on, pin subject to adjustment
+    led_pin = 27  # Pin 28 = GP28 (labelled 34 on the jumper)
+    led = Pin(led_pin, Pin.OUT)
+    led.value(1)
+    
     # After calling this adjustment module, keeping walking straight
     print("Adjusting position")
     motor_left.Forward(30)
