@@ -10,7 +10,7 @@ from libs.VL53L0X.VL53L0X import VL53L0X
 bot_state = motion_control.general_push_button()
 # check the push button, until it is turned on
 while bot_state == False:
-    bot_state = motion_control.general_push_button() # optionally, turn on the flash led or it can be designed in the circuit(light up whenever the push button is on)
+    bot_state = motion_control.general_push_button() 
 
 # Set the two motors information, detailed PIN number subject to change here
 # All the modules which have actions on the motors have arguments (motor_left, motor_right)
