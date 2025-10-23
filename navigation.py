@@ -379,4 +379,18 @@ def return_sequence(motor_left, motor_right, code, sensor1, sensor2, sensor3, se
 
     else:
         print("Something has gone terribly wrong")
+     
+
+def ending_sequence(motor_left, motor_right):
+    print("Executing ending sequence to return to starting area")
+
+    motion_control.turn_left_90(motor_left, motor_right)
+    while detection_module.distance_sensing() > 1000:
+        motion_control.go_forward(motor_left, motor_right, 50)
+    motion_control.stop_the_car(motor_left, motor_right)
+    motion_control.turn_right_90(motor_left, motor_right)
+    motion_control.go_forward(motor_left, motor_right, 50)
+    sleep(2)
+    motion_control.stop_the_car(motor_left, motor_right)
+    motion_control.turn_around(motor_left, motor_right)
     
