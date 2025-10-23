@@ -20,4 +20,16 @@ def align_to_line(motor_left, motor_right):
             motion_control.adjust_to_right(motor_left, motor_right)  # Turn right slightly
         
 def align_to_line_back(motor_left, motor_right):
-    pass
+    # alignment protocol when the bot is going back
+    
+    straight, temp = detection_module.straight_line_detection()
+    
+    if straight == True:
+        print("Aligned with the line.")
+    else:
+        if temp == "left_detected":
+            print("Line detected on the left. Adjusting position...")
+            motion_control.adjust_to_left_back(motor_left, motor_right)  # Turn left slightly
+        elif temp == "right_detected":
+            print("Line detected on the right. Adjusting position...")
+            motion_control.adjust_to_right_back(motor_left, motor_right)  # Turn right slightly

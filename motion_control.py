@@ -129,3 +129,29 @@ def adjust_to_right(motor_left, motor_right):
     motor_right.Forward(10)
     sleep(0.5)
     print("Position adjustment finished")
+    
+def adjust_to_left_back(motor_left, motor_right):
+    # turn a led on when one motor is on, pin subject to adjustment
+    led_pin = 27  # Pin 28 = GP28 (labelled 34 on the jumper)
+    led = Pin(led_pin, Pin.OUT)
+    led.value(1)
+    
+    # After calling this adjustment module, keeping walking straight
+    print("Adjusting position")
+    motor_left.Reverse(10)
+    motor_right.Reverse(30)
+    sleep(0.5)
+    print("Position adjustment finished")
+    
+def adjust_to_right_back(motor_left, motor_right):
+    # turn a led on when one motor is on, pin subject to adjustment
+    led_pin = 27  # Pin 28 = GP28 (labelled 34 on the jumper)
+    led = Pin(led_pin, Pin.OUT)
+    led.value(1)
+    
+    # After calling this adjustment module, keeping walking straight
+    print("Adjusting position")
+    motor_left.Reverse(30)
+    motor_right.Reverse(10)
+    sleep(0.5)
+    print("Position adjustment finished")
