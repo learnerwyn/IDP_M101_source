@@ -5,6 +5,7 @@ from motion_control import go_forward, go_back, turn_around, turn_left_90, turn_
 from motion_control import Motor
 from detection_module import qr_code_reader, distance_sensing, straight_line_detection
 import alignment
+import motion_control
 
 # Input the pin numbers down here
 motor_left = Motor(dirPin=4, PWMPin=5)  # Motor 1 is controlled from Motor Driv2 #1, which is on GP4/5
@@ -79,4 +80,8 @@ def test7(motor_left, motor_right):
     go = False
 
 if __name__ == "__main__":
+    bot_state = motion_control.general_push_button()
+    # check the push button, until it is turned on
+    while bot_state == False:
+        bot_state = motion_control.general_push_button()
     test1()
