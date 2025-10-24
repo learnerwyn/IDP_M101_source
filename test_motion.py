@@ -17,6 +17,8 @@ def test1(motor_left, motor_right):
     sleep(5)
     stop_the_car(motor_left, motor_right)
     go_back(motor_left, motor_right, 30)
+    sleep(5)
+    stop_the_car(motor_left, motor_right)
 
 def test2(motor_left, motor_right):
     # test 2: turn left and then turn right and then turn around
@@ -84,4 +86,4 @@ if __name__ == "__main__":
     # check the push button, until it is turned on
     while bot_state == False:
         bot_state = motion_control.general_push_button()
-    test1()
+    test1(motor_left, motor_right)
