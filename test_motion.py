@@ -9,7 +9,7 @@ import motion_control
 
 # Input the pin numbers down here
 motor_left = Motor(dirPin=4, PWMPin=5)  # Motor 1 is controlled from Motor Driv2 #1, which is on GP4/5
-motor_right = Motor(dirPin=4, PWMPin=5)
+motor_right = Motor(dirPin=7, PWMPin=6)
 
 def test1(motor_left, motor_right):
     # test 1: go forward for 5 sec and stop and then go reverse
