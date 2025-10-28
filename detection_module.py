@@ -6,7 +6,7 @@ from libs.VL53L0X.VL53L0X import VL53L0X
 
 def straight_line_detection():
     
-    #Set the line sensor pin, sensor 3 is in the front middle, sensor 2 is in the back middle, 4 and 1 are offset to left and right respectively
+    #Set the line sensor pin, sensors are connected, in order left to right, to pins 1, 2, 3, and 4
     sensor1_pin = 12
     sensor1 = Pin(sensor1_pin, Pin.IN, Pin.PULL_DOWN)
     sensor2_pin = 12
@@ -22,10 +22,17 @@ def straight_line_detection():
         straight = True
     else:
         straight = False
-        if sensor4.value() == 1 and sensor3.value() == sensor1.value() == 0:
+        if sensor2.value() == 1 and sensor3.value() == 0:
+            temp = "misaligned_to_right"
+        elif sensor2.value() == 0 and sensor3.value == 1:
+            temp = "misaligned_to_left"
+        elif sensor1.value() == 1 and sensor4.value() == 1:
+            temp = "junction_detected"
+        elif sensor4.value() == 1 and sensor1.value() == 0:
             temp = "right_detected"
-        elif sensor1.value() == 1 and sensor3.value() == sensor4.value() == 0:
+        elif sensor1.value() == 1 and sensor4.value() == 0:
             temp = "left_detected"
+        
     
     return straight, temp
         

@@ -12,11 +12,11 @@ def align_to_line(motor_left, motor_right):
     if straight == True:
         print("Aligned with the line.")
     else:
-        if temp == "left_detected":
-            print("Line detected on the left. Adjusting position...")
+        if temp == "misaligned_to_right":
+            print("Bot drifted right. Adjusting position...")
             motion_control.adjust_to_left(motor_left, motor_right)  # Turn left slightly
-        elif temp == "right_detected":
-            print("Line detected on the right. Adjusting position...")
+        elif temp == "misaligned_to_left":
+            print("Bot drifted left. Adjusting position...")
             motion_control.adjust_to_right(motor_left, motor_right)  # Turn right slightly
         
 def align_to_line_back(motor_left, motor_right):
@@ -27,9 +27,9 @@ def align_to_line_back(motor_left, motor_right):
     if straight == True:
         print("Aligned with the line.")
     else:
-        if temp == "left_detected":
+        if temp == "misaligned_to_right":
             print("Line detected on the left. Adjusting position...")
             motion_control.adjust_to_left_back(motor_left, motor_right)  # Turn left slightly
-        elif temp == "right_detected":
+        elif temp == "misaligned_to_left":
             print("Line detected on the right. Adjusting position...")
             motion_control.adjust_to_right_back(motor_left, motor_right)  # Turn right slightly
