@@ -112,8 +112,8 @@ def adjust_to_left(motor_left, motor_right):
     
     # After calling this adjustment module, keeping walking straight
     print("Adjusting position")
-    #motor_left.Forward(30)
-    motor_right.Reverse(60)
+    motor_left.Forward(40)
+    motor_right.Reverse(80)
     sleep(0.3)
     print("Position adjustment finished")
     
@@ -125,8 +125,8 @@ def adjust_to_right(motor_left, motor_right):
     
     # After calling this adjustment module, keeping walking straight
     print("Adjusting position")
-    motor_left.Forward(60)
-    #motor_right.Reverse(30)
+    motor_left.Forward(80)
+    motor_right.Reverse(40)
     sleep(0.3)
     print("Position adjustment finished")
     
