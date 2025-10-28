@@ -41,7 +41,7 @@ def default_path(motor_left, motor_right):
     if code is None:
         #if code is not read, back out of bay 1
         motion_control.go_back(motor_left, motor_right, 50)
-        while temp != "junction_detected":
+        while temp != "left_detected":
             straight, temp = detection_module.straight_line_detection()
             alignment.align_to_line_back(motor_left, motor_right)
             motion_control.go_back(motor_left, motor_right, 50)
@@ -74,6 +74,7 @@ def default_path(motor_left, motor_right):
         if code is None:
             #if no code, back out of bay 2
             motion_control.go_back(motor_left, motor_right, 50)
+            sleep(0.2)
             while temp != "junction_detected":
                 straight, temp = detection_module.straight_line_detection()
                 alignment.align_to_line_back(motor_left, motor_right)
@@ -108,6 +109,7 @@ def default_path(motor_left, motor_right):
             if code is None:
                 #if no code, back out of bay 3
                 motion_control.go_back(motor_left, motor_right, 50)
+                sleep(0.2)
                 while temp != "junction_detected":
                     straight, temp = detection_module.straight_line_detection()
                     alignment.align_to_line_back(motor_left, motor_right)
@@ -141,7 +143,7 @@ def default_path(motor_left, motor_right):
                 if code is None:
                     #if no code, back out of bay 4
                     motion_control.go_back(motor_left, motor_right, 50)
-                    while temp != "junction_detected":
+                    while temp != "right_detected":
                         straight, temp = detection_module.straight_line_detection()
                         alignment.align_to_line_back(motor_left, motor_right)
                         motion_control.go_back(motor_left, motor_right, 50)
