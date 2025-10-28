@@ -19,7 +19,7 @@ motor_left = Motor(dirPin=4, PWMPin=5)  # Motor 1 is controlled from Motor Driv2
 motor_right = Motor(dirPin=4, PWMPin=5)
 
 forklift = Forklift(
-    15, # servo 2 position pin
+    15, # servo 1 position pin
 )
 
 # Activation mechanism via button on the physical bot
