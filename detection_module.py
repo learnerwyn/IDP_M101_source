@@ -7,11 +7,11 @@ from libs.VL53L0X.VL53L0X import VL53L0X
 def straight_line_detection():
     
     #Set the line sensor pin, sensors are connected, in order left to right, to pins 1, 2, 3, and 4
-    sensor1_pin = 12
+    sensor1_pin = 2
     sensor1 = Pin(sensor1_pin, Pin.IN, Pin.PULL_DOWN)
-    sensor2_pin = 12
+    sensor2_pin = 8
     sensor2 = Pin(sensor1_pin, Pin.IN, Pin.PULL_DOWN)
-    sensor3_pin = 12
+    sensor3_pin = 9
     sensor3 = Pin(sensor1_pin, Pin.IN, Pin.PULL_DOWN)
     sensor4_pin = 12
     sensor4 = Pin(sensor1_pin, Pin.IN, Pin.PULL_DOWN)
@@ -40,12 +40,12 @@ def straight_line_detection():
 def qr_code_reader():
     print("Starting tiny code reader...")
     # turn a led on when the qr code reader is on, pin subject to adjustment
-    led_pin = 28  # Pin 28 = GP28 (labelled 34 on the jumper)
+    led_pin = 11  # Pin 28 = GP28 (labelled 34 on the jumper)
     led = Pin(led_pin, Pin.OUT)
     led.value(1)
     
     # Set up for the Pico, pin numbers will vary across boards.
-    i2c_bus = I2C(id=0, scl=Pin(17), sda=Pin(16), freq=400000) # I2C0 on GP16 & GP17
+    i2c_bus = I2C(id=0, scl=Pin(19), sda=Pin(18), freq=400000) # I2C0 on GP16 & GP17
 
     i2c_devs = i2c_bus.scan()
     # Uncomment this to see what peripherals were detected on the bus. We would
@@ -73,7 +73,7 @@ def qr_code_reader():
 
 def distance_sensing():
     # config I2C Bus
-    i2c_bus = I2C(id=0, sda=Pin(8), scl=Pin(9)) # I2C0 on GP8 & GP9
+    i2c_bus = I2C(id=0, sda=Pin(14), scl=Pin(15)) # I2C0 on GP8 & GP9
     # print(i2c_bus.scan())  # Get the address (nb 41=0x29, 82=0x52)
     
     # Setup vl53l0 object
