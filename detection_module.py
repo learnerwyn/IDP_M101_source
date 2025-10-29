@@ -10,11 +10,11 @@ def straight_line_detection():
     sensor1_pin = 2
     sensor1 = Pin(sensor1_pin, Pin.IN, Pin.PULL_DOWN)
     sensor2_pin = 8
-    sensor2 = Pin(sensor1_pin, Pin.IN, Pin.PULL_DOWN)
+    sensor2 = Pin(sensor2_pin, Pin.IN, Pin.PULL_DOWN)
     sensor3_pin = 9
-    sensor3 = Pin(sensor1_pin, Pin.IN, Pin.PULL_DOWN)
+    sensor3 = Pin(sensor3_pin, Pin.IN, Pin.PULL_DOWN)
     sensor4_pin = 12
-    sensor4 = Pin(sensor1_pin, Pin.IN, Pin.PULL_DOWN)
+    sensor4 = Pin(sensor4_pin, Pin.IN, Pin.PULL_DOWN)
     
     straight = None
     temp = None
@@ -24,7 +24,7 @@ def straight_line_detection():
         straight = False
         if sensor2.value() == 1 and sensor3.value() == 0:
             temp = "misaligned_to_right"
-        elif sensor2.value() == 0 and sensor3.value == 1:
+        elif sensor2.value() == 0 and sensor3.value() == 1:
             temp = "misaligned_to_left"
         elif sensor1.value() == 1 and sensor4.value() == 1:
             temp = "junction_detected"

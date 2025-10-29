@@ -3,7 +3,7 @@ from time import sleep
 
 def general_push_button():
     #Set the button pin
-    button_pin = 27
+    button_pin = 0
     button = Pin(button_pin, Pin.IN, Pin.PULL_DOWN)
     bot_state = False
     if button.value() == 1:
@@ -39,7 +39,7 @@ def go_forward(motor_left, motor_right, speed):
     led.value(1)
     
     motor_left.Forward(speed)
-    motor_right.Reverse(speed)
+    motor_right.Forward(speed)
     
 def go_back(motor_left, motor_right, speed):
     # turn a led on when one motor is on, pin subject to adjustment
@@ -48,7 +48,7 @@ def go_back(motor_left, motor_right, speed):
     led.value(1)
     
     motor_left.Reverse(speed)
-    motor_right.Forward(speed)
+    motor_right.Reverse(speed)
 
 def stop_the_car(motor_left, motor_right):
     # turn a led off when no motors are on, pin subject to adjustment
@@ -111,11 +111,11 @@ def adjust_to_left(motor_left, motor_right):
     led.value(1)
     
     # After calling this adjustment module, keeping walking straight
-    print("Adjusting position")
-    motor_left.Forward(40)
-    motor_right.Reverse(80)
-    sleep(0.3)
-    print("Position adjustment finished")
+    print("Adjusting position to left")
+    motor_left.Forward(80)
+    motor_right.Forward(40)
+    sleep(0.2)
+    print("Position adjustment to left finished")
     
 def adjust_to_right(motor_left, motor_right):
     # turn a led on when one motor is on, pin subject to adjustment
@@ -124,11 +124,11 @@ def adjust_to_right(motor_left, motor_right):
     led.value(1)
     
     # After calling this adjustment module, keeping walking straight
-    print("Adjusting position")
-    motor_left.Forward(80)
-    motor_right.Reverse(40)
-    sleep(0.3)
-    print("Position adjustment finished")
+    print("Adjusting position to right")
+    motor_left.Forward(20)
+    motor_right.Forward(100)
+    sleep(0.2)
+    print("Position adjustment to right finished")
     
 def adjust_to_left_back(motor_left, motor_right):
     # turn a led on when one motor is on, pin subject to adjustment

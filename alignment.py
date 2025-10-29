@@ -9,9 +9,8 @@ def align_to_line(motor_left, motor_right):
     
     straight, temp = detection_module.straight_line_detection()
     
-    if straight == True:
-        print("Aligned with the line.")
-    else:
+    if straight != True:
+        # print("Aligned with the line.")
         if temp == "misaligned_to_right":
             print("Bot drifted right. Adjusting position...")
             motion_control.adjust_to_left(motor_left, motor_right)  # Turn left slightly
