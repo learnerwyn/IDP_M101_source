@@ -22,8 +22,6 @@ forklift = Forklift(
     15, # servo 1 position pin
 )
 
-# Activation mechanism via button on the physical bot
-
 
 # Start a timer for 4 ish minutes in order to complete parking sequence within time limit
 
