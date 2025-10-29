@@ -15,7 +15,7 @@ while bot_state == False:
 
 # Set the two motors information, detailed PIN number subject to change here
 # All the modules which have actions on the motors have arguments (motor_left, motor_right)
-motor_left = Motor(dirPin=4, PWMPin=5)  # Motor 1 is controlled from Motor Driv2 #1, which is on GP4/5
+motor_left = Motor(dirPin=7, PWMPin=6)  # Motor 1 is controlled from Motor Driv2 #1, which is on GP4/5
 motor_right = Motor(dirPin=4, PWMPin=5)
 
 forklift = Forklift(

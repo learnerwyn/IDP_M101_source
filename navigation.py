@@ -12,6 +12,7 @@ def start_sequence(motor_left, motor_right):
     while temp != "junction_detected":
         straight, temp = detection_module.straight_line_detection()
         alignment.align_to_line(motor_left, motor_right)
+        motion_control.go_forward(motor_left, motor_right, 50)
     sleep(0.2)
     motion_control.stop_the_car(motor_left, motor_right)
     motion_control.turn_left_90(motor_left, motor_right)
@@ -20,6 +21,7 @@ def start_sequence(motor_left, motor_right):
     while temp != "junction_detected":
         straight, temp = detection_module.straight_line_detection()
         alignment.align_to_line(motor_left, motor_right)
+        motion_control.go_forward(motor_left, motor_right, 50)
     sleep(0.2)
     motion_control.stop_the_car(motor_left, motor_right)
     motion_control.turn_left_90(motor_left, motor_right)
@@ -27,9 +29,9 @@ def start_sequence(motor_left, motor_right):
 
 # Default path for normal operation from zone 1 to zone 4
 
-def default_path(motor_left, motor_right):
+def default_path(motor_left, motor_right, forklift):
     #enter bay 1 and read code
-    motion_control.go_forward(50)
+    motion_control.go_forward(motor_left, motor_right, 50)
     straight, temp = detection_module.straight_line_detection()
     while temp != "junction_detected":
         straight, temp = detection_module.straight_line_detection()
@@ -62,7 +64,7 @@ def default_path(motor_left, motor_right):
         motion_control.turn_right_90(motor_left, motor_right)
         
         #enter bay 2 and scan code
-        motion_control.go_forward(50)
+        motion_control.go_forward(motor_left, motor_right, 50)
         straight, temp = detection_module.straight_line_detection()
         while temp != "junction_detected":
             straight, temp = detection_module.straight_line_detection()
@@ -97,7 +99,7 @@ def default_path(motor_left, motor_right):
             motion_control.turn_right_90(motor_left, motor_right)
             
             #enter bay 3 and scan
-            motion_control.go_forward(50)
+            motion_control.go_forward(motor_left, motor_right, 50)
             straight, temp = detection_module.straight_line_detection()
             while temp != "junction_detected":
                 straight, temp = detection_module.straight_line_detection()
@@ -131,7 +133,7 @@ def default_path(motor_left, motor_right):
                 motion_control.turn_right_90(motor_left, motor_right)
 
                 #enter bay 4 and scan
-                motion_control.go_forward(50)
+                motion_control.go_forward(motor_left, motor_right, 50)
                 straight, temp = detection_module.straight_line_detection()
                 while temp != "junction_detected":
                     straight, temp = detection_module.straight_line_detection()
@@ -165,18 +167,22 @@ def default_path(motor_left, motor_right):
                 
                 else:
                     print(f"QR code found in zone 4: {code}")
+                    forklift.goToRaisedLevel()
             else:
                 print(f"QR code found in zone 3: {code}")
+                forklift.goToRaisedLevel()
         else:
             print(f"QR code found in zone 2: {code}")
+            forklift.goToRaisedLevel()
     else:
         print(f"QR code found in zone 1: {code}")
+        forklift.goToRaisedLevel()
 
 
 
 # Sequence for when QR code is found to pick up and drop off the item
 
-def unloading_sequence(motor_left, motor_right, code):
+def unloading_sequence(motor_left, motor_right, forklift, code):
     print(f"Starting unloading sequence for QR code: {code}")
 
     # Placeholder for pickup mechanism
