@@ -30,6 +30,7 @@ def start_sequence(motor_left, motor_right):
 # Default path for normal operation from zone 1 to zone 4
 
 def default_path(motor_left, motor_right, forklift):
+    code = None
     #enter bay 1 and read code
     motion_control.go_forward(motor_left, motor_right, 50)
     sleep(0.2)
@@ -38,8 +39,9 @@ def default_path(motor_left, motor_right, forklift):
         straight, temp = detection_module.straight_line_detection()
         alignment.align_to_line(motor_left, motor_right)
         motion_control.go_forward(motor_left, motor_right, 50)
+        if code == None:
+            code = detection_module.qr_code_reader()
     motion_control.stop_the_car(motor_left, motor_right)
-    code = detection_module.qr_code_reader()
     
     if code is None:
         #if code is not read, back out of bay 1
@@ -76,8 +78,9 @@ def default_path(motor_left, motor_right, forklift):
             straight, temp = detection_module.straight_line_detection()
             alignment.align_to_line(motor_left, motor_right)
             motion_control.go_forward(motor_left, motor_right, 50)
+            if code == None:
+                code = detection_module.qr_code_reader()
         motion_control.stop_the_car(motor_left, motor_right)
-        code = detection_module.qr_code_reader()
         
         if code is None:
             #if no code, back out of bay 2
@@ -113,8 +116,9 @@ def default_path(motor_left, motor_right, forklift):
                 straight, temp = detection_module.straight_line_detection()
                 alignment.align_to_line(motor_left, motor_right)
                 motion_control.go_forward(motor_left, motor_right, 50)
+                if code == None:
+                    code = detection_module.qr_code_reader()
             motion_control.stop_the_car(motor_left, motor_right)
-            code = detection_module.qr_code_reader()
             
             if code is None:
                 #if no code, back out of bay 3
@@ -150,8 +154,9 @@ def default_path(motor_left, motor_right, forklift):
                     straight, temp = detection_module.straight_line_detection()
                     alignment.align_to_line(motor_left, motor_right)
                     motion_control.go_forward(motor_left, motor_right, 50)
+                    if code == None:
+                        code = detection_module.qr_code_reader()
                 motion_control.stop_the_car(motor_left, motor_right)
-                code = detection_module.qr_code_reader()
                 
                 if code is None:
                     #if no code, back out of bay 4
