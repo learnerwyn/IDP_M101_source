@@ -3,13 +3,13 @@ from time import sleep
 
 from motion_control import go_forward, go_back, turn_around, turn_left_90, turn_right_90, stop_the_car, adjust_to_left, adjust_to_right
 from motion_control import Motor
-# from detection_module import qr_code_reader, distance_sensing, straight_line_detection
-# import alignment
+from detection_module import qr_code_reader, distance_sensing, straight_line_detection
+import alignment
 import motion_control
 
 # Input the pin numbers down here
-motor_left = Motor(dirPin=7, PWMPin=6)  # Motor 1 is controlled from Motor Driv2 #1, which is on GP4/5
-motor_right = Motor(dirPin=4, PWMPin=5)
+motor_left = Motor(dirPin=4, PWMPin=5)  # Motor 1 is controlled from Motor Driv2 #1, which is on GP4/5
+motor_right = Motor(dirPin=7, PWMPin=6)
 
 def test1(motor_left, motor_right):
     # test 1: go forward for 5 sec and stop and then go reverse
@@ -30,14 +30,14 @@ def test2(motor_left, motor_right):
     
 def test3(motor_left, motor_right):
     # test 3: adjust the car to the left and right
-    go_forward(motor_left, motor_right, 80)
-    sleep(3)
+    go_forward(motor_left, motor_right, 50)
+    sleep(1)
     adjust_to_left(motor_left, motor_right)
-    go_forward(motor_left, motor_right, 80)
-    sleep(3)
+    go_forward(motor_left, motor_right, 50)
+    sleep(1)
     adjust_to_right(motor_left, motor_right)
-    go_forward(motor_left, motor_right, 80)
-    sleep(3)
+    go_forward(motor_left, motor_right, 50)
+    sleep(1)
     stop_the_car(motor_left, motor_right)
     
 def test4(motor_left, motor_right):
@@ -72,18 +72,19 @@ def test6(motor_left, motor_right):
     stop_the_car(motor_left,motor_right) # stop the car while not following the straight line
 
 def test7(motor_left, motor_right):
-    # test 7: test the alignment, put the car on the line with a small angle
+    # test 7: test the alignment
     go_forward(motor_left, motor_right, 50)
-    go = True
-    distance = 2000
-    while go == True and distance > 200:
+    straight, temp = straight_line_detection()
+    while temp != "junction_detected":
         alignment.align_to_line(motor_left, motor_right)
+        go_forward(motor_left, motor_right, 50)
+        straight, temp = straight_line_detection()`
     stop_the_car(motor_left,motor_right)
-    go = False
 
 if __name__ == "__main__":
     bot_state = motion_control.general_push_button()
     # check the push button, until it is turned on
     while bot_state == False:
         bot_state = motion_control.general_push_button()
-    test1(motor_left, motor_right)
+    print("abc")
+    test7(motor_left, motor_right)
