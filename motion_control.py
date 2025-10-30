@@ -3,7 +3,7 @@ from time import sleep
 
 def general_push_button():
     #Set the button pin
-    button_pin = 0
+    button_pin = 27
     button = Pin(button_pin, Pin.IN, Pin.PULL_DOWN)
     bot_state = False
     if button.value() == 1:
@@ -59,7 +59,7 @@ def stop_the_car(motor_left, motor_right):
     motor_left.off()
     motor_right.off()
 
-def turn_left_90(motor_left, motor_right):
+def turn_right_90(motor_left, motor_right):
     # turn a led on when one motor is on, pin subject to adjustment
     led_pin = 0  # Pin 28 = GP28 (labelled 34 on the jumper)
     led = Pin(led_pin, Pin.OUT)
@@ -68,13 +68,13 @@ def turn_left_90(motor_left, motor_right):
     print("Turn Right Start")
     speed = 100 # speed subject to adjustment
     motor_left.Forward(speed)
-    motor_right.Forward(speed)
-    sleep(0.8) # time subject to adjustment
+    motor_right.Reverse(speed)
+    sleep(0.6) # time subject to adjustment
     motor_left.off()
     motor_right.off()
     print("Turn Right Finish")
     
-def turn_right_90(motor_left, motor_right):
+def turn_left_90(motor_left, motor_right):
     # turn a led on when one motor is on, pin subject to adjustment
     led_pin = 0  # Pin 28 = GP28 (labelled 34 on the jumper)
     led = Pin(led_pin, Pin.OUT)
@@ -83,7 +83,7 @@ def turn_right_90(motor_left, motor_right):
     print("Trun Left Start")
     speed = 100 # speed subject to adjustment
     motor_left.Reverse(speed)
-    motor_right.Reverse(speed)
+    motor_right.Forward(speed)
     sleep(0.7) # time subject to adjustment
     motor_left.off()
     motor_right.off()
@@ -98,24 +98,11 @@ def turn_around(motor_left, motor_right):
     print("Trun Around Start")
     speed = 100 # speed subject to adjustment
     motor_left.Forward(speed)
-    motor_right.Forward(speed)
-    sleep(1.6) # time subject to adjustment
+    motor_right.Reverse(speed)
+    sleep(1.2) # time subject to adjustment
     motor_left.off()
     motor_right.off()
     print("Turn Around Finish")
-    
-def adjust_to_left(motor_left, motor_right):
-    # turn a led on when one motor is on, pin subject to adjustment
-    led_pin = 0  # Pin 28 = GP28 (labelled 34 on the jumper)
-    led = Pin(led_pin, Pin.OUT)
-    led.value(1)
-    
-    # After calling this adjustment module, keeping walking straight
-    print("Adjusting position to left")
-    motor_left.Forward(80)
-    motor_right.Forward(40)
-    sleep(0.2)
-    print("Position adjustment to left finished")
     
 def adjust_to_right(motor_left, motor_right):
     # turn a led on when one motor is on, pin subject to adjustment
@@ -125,10 +112,23 @@ def adjust_to_right(motor_left, motor_right):
     
     # After calling this adjustment module, keeping walking straight
     print("Adjusting position to right")
-    motor_left.Forward(20)
-    motor_right.Forward(100)
+    motor_left.Forward(80)
+    motor_right.Forward(40)
     sleep(0.2)
     print("Position adjustment to right finished")
+    
+def adjust_to_left(motor_left, motor_right):
+    # turn a led on when one motor is on, pin subject to adjustment
+    led_pin = 0  # Pin 28 = GP28 (labelled 34 on the jumper)
+    led = Pin(led_pin, Pin.OUT)
+    led.value(1)
+    
+    # After calling this adjustment module, keeping walking straight
+    print("Adjusting position to left")
+    motor_left.Forward(40)
+    motor_right.Forward(80)
+    sleep(0.2)
+    print("Position adjustment to left finished")
     
 def adjust_to_left_back(motor_left, motor_right):
     # turn a led on when one motor is on, pin subject to adjustment
@@ -138,9 +138,9 @@ def adjust_to_left_back(motor_left, motor_right):
     
     # After calling this adjustment module, keeping walking straight
     print("Adjusting position")
-    motor_left.Reverse(30)
-    motor_right.Forward(60)
-    sleep(0.5)
+    motor_left.Reverse(40)
+    motor_right.Reverse(80)
+    sleep(0.15)
     print("Position adjustment finished")
     
 def adjust_to_right_back(motor_left, motor_right):
@@ -151,7 +151,7 @@ def adjust_to_right_back(motor_left, motor_right):
     
     # After calling this adjustment module, keeping walking straight
     print("Adjusting position")
-    motor_left.Reverse(60)
-    motor_right.Forward(30)
-    sleep(0.5)
+    motor_left.Reverse(80)
+    motor_right.Reverse(40)
+    sleep(0.15)
     print("Position adjustment finished")

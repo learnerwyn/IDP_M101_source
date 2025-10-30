@@ -6,10 +6,11 @@ from motion_control import Motor
 from detection_module import qr_code_reader, distance_sensing, straight_line_detection
 import alignment
 import motion_control
+import navigation
 
 # Input the pin numbers down here
-motor_left = Motor(dirPin=4, PWMPin=5)  # Motor 1 is controlled from Motor Driv2 #1, which is on GP4/5
-motor_right = Motor(dirPin=7, PWMPin=6)
+motor_right = Motor(dirPin=4, PWMPin=5)  # Motor 1 is controlled from Motor Driv2 #1, which is on GP4/5
+motor_left = Motor(dirPin=7, PWMPin=6)
 
 def test1(motor_left, motor_right):
     # test 1: go forward for 5 sec and stop and then go reverse
@@ -73,18 +74,50 @@ def test6(motor_left, motor_right):
 
 def test7(motor_left, motor_right):
     # test 7: test the alignment
-    go_forward(motor_left, motor_right, 50)
+    go_forward(motor_left, motor_right, 80)
     straight, temp = straight_line_detection()
-    while temp != "junction_detected":
+    while temp != "right_detected":
         alignment.align_to_line(motor_left, motor_right)
-        go_forward(motor_left, motor_right, 50)
-        straight, temp = straight_line_detection()`
+        go_forward(motor_left, motor_right, 80)
+        straight, temp = straight_line_detection()
+    sleep(0.2)
     stop_the_car(motor_left,motor_right)
+    turn_right_90(motor_left, motor_right)
+    go_forward(motor_left, motor_right, 80)
+    straight, temp = straight_line_detection()
+    while temp != "left_detected":
+        alignment.align_to_line(motor_left, motor_right)
+        go_forward(motor_left, motor_right, 80)
+        straight, temp = straight_line_detection()
+    sleep(0.15)
+    stop_the_car(motor_left,motor_right)
+
+def test8(motor_left, motor_right):
+    # test 7: test then backward alignment
+    go_back(motor_left, motor_right, 80)
+    straight, temp = straight_line_detection()
+    while temp != "left_detected":
+        alignment.align_to_line_back(motor_left, motor_right)
+        go_back(motor_left, motor_right, 80)
+        straight, temp = straight_line_detection()
+    sleep(0.2)
+    stop_the_car(motor_left,motor_right)
+    
+def test9(motor_left, motor_right):
+    go_back(motor_left, motor_right, 80)
+    sleep(1)
+    adjust_to_left_back(motor_left, motor_right)
+    go_back(motor_left, motor_right, 80)
+    sleep(1)
+    adjust_to_right_back(motor_left, motor_right)
+    go_back(motor_left, motor_right, 80)
+    sleep(1)
+    stop_the_car(motor_left, motor_right)
 
 if __name__ == "__main__":
     bot_state = motion_control.general_push_button()
     # check the push button, until it is turned on
     while bot_state == False:
         bot_state = motion_control.general_push_button()
-    print("abc")
-    test7(motor_left, motor_right)
+    print("abc") 
+    test3(motor_left, motor_right)
