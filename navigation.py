@@ -32,26 +32,28 @@ def start_sequence(motor_left, motor_right):
 def default_path(motor_left, motor_right, forklift):
     code = None
     #enter bay 1 and read code
-    motion_control.go_forward(motor_left, motor_right, 50)
-    sleep(0.2)
+    motion_control.go_forward(motor_left, motor_right, 80)
     straight, temp = detection_module.straight_line_detection()
     while temp != "junction_detected":
-        straight, temp = detection_module.straight_line_detection()
         alignment.align_to_line(motor_left, motor_right)
-        motion_control.go_forward(motor_left, motor_right, 50)
+        motion_control.go_forward(motor_left, motor_right, 80)
+        straight, temp = detection_module.straight_line_detection()
         if code == None:
-            code = detection_module.qr_code_reader()
+            try:
+                code = detection_module.qr_code_reader()
+            except:
+                code = None
     motion_control.stop_the_car(motor_left, motor_right)
     
     if code is None:
         #if code is not read, back out of bay 1
-        motion_control.go_back(motor_left, motor_right, 50)
-        sleep(0.2)
+        motion_control.go_back(motor_left, motor_right, 80)
+        sleep(0.4)
         straight, temp = detection_module.straight_line_detection()
         while temp != "left_detected":
-            straight, temp = detection_module.straight_line_detection()
             alignment.align_to_line_back(motor_left, motor_right)
-            motion_control.go_back(motor_left, motor_right, 50)
+            motion_control.go_back(motor_left, motor_right, 80)
+            straight, temp = detection_module.straight_line_detection()
         motion_control.stop_the_car(motor_left, motor_right)
         motion_control.go_forward(motor_left, motor_right, 30)
         sleep(0.3)
@@ -59,37 +61,40 @@ def default_path(motor_left, motor_right, forklift):
         motion_control.turn_left_90(motor_left, motor_right)
         
         #go to bay 2 entrance
-        motion_control.go_forward(motor_left, motor_right, 50)
+        motion_control.go_forward(motor_left, motor_right, 80)
         sleep(0.2)
         straight, temp = detection_module.straight_line_detection()
         while temp != "right_detected":
-            straight, temp = detection_module.straight_line_detection()
             alignment.align_to_line(motor_left, motor_right)
-            motion_control.go_forward(motor_left, motor_right, 50)
+            motion_control.go_forward(motor_left, motor_right, 80)
+            straight, temp = detection_module.straight_line_detection()
         sleep(0.2)
         motion_control.stop_the_car(motor_left, motor_right)
         motion_control.turn_right_90(motor_left, motor_right)
         
         #enter bay 2 and scan code
-        motion_control.go_forward(motor_left, motor_right, 50)
+        motion_control.go_forward(motor_left, motor_right, 80)
         sleep(0.2)
         straight, temp = detection_module.straight_line_detection()
         while temp != "junction_detected":
-            straight, temp = detection_module.straight_line_detection()
             alignment.align_to_line(motor_left, motor_right)
-            motion_control.go_forward(motor_left, motor_right, 50)
+            motion_control.go_forward(motor_left, motor_right, 80)
+            straight, temp = detection_module.straight_line_detection()
             if code == None:
-                code = detection_module.qr_code_reader()
+                try:
+                    code = detection_module.qr_code_reader()
+                except:
+                    code = None
         motion_control.stop_the_car(motor_left, motor_right)
         
         if code is None:
             #if no code, back out of bay 2
-            motion_control.go_back(motor_left, motor_right, 50)
-            sleep(0.2)
+            motion_control.go_back(motor_left, motor_right, 80)
+            sleep(0.4)
             while temp != "junction_detected":
-                straight, temp = detection_module.straight_line_detection()
                 alignment.align_to_line_back(motor_left, motor_right)
-                motion_control.go_back(motor_left, motor_right, 50)
+                motion_control.go_back(motor_left, motor_right, 80)
+                straight, temp = detection_module.straight_line_detection()
             motion_control.stop_the_car(motor_left, motor_right)
             motion_control.go_forward(motor_left, motor_right, 30)
             sleep(0.3)
@@ -97,38 +102,44 @@ def default_path(motor_left, motor_right, forklift):
             motion_control.turn_left_90(motor_left, motor_right)
 
             #go to bay 3
-            motion_control.go_forward(motor_left, motor_right, 50)
+            motion_control.go_forward(motor_left, motor_right, 80)
             sleep(0.2)
             straight, temp = detection_module.straight_line_detection()
-            while detection_module.distance_sensing() > 600 or temp != "right_detected":
-                straight, temp = detection_module.straight_line_detection()
-                alignment.align_to_line(motor_left, motor_right)
-                motion_control.go_forward(motor_left, motor_right, 50)
-            sleep(0.2)
+            i = 0
+            while i < 2:
+                while temp != "right_detected":
+                    alignment.align_to_line(motor_left, motor_right)
+                    motion_control.go_forward(motor_left, motor_right, 80)
+                    straight, temp = detection_module.straight_line_detection()
+                sleep(0.2)
+                i += 1
             motion_control.stop_the_car(motor_left, motor_right)
             motion_control.turn_right_90(motor_left, motor_right)
             
             #enter bay 3 and scan
-            motion_control.go_forward(motor_left, motor_right, 50)
+            motion_control.go_forward(motor_left, motor_right, 80)
             sleep(0.2)
             straight, temp = detection_module.straight_line_detection()
             while temp != "junction_detected":
-                straight, temp = detection_module.straight_line_detection()
                 alignment.align_to_line(motor_left, motor_right)
-                motion_control.go_forward(motor_left, motor_right, 50)
+                motion_control.go_forward(motor_left, motor_right, 80)
+                straight, temp = detection_module.straight_line_detection()
                 if code == None:
-                    code = detection_module.qr_code_reader()
+                    try:
+                        code = detection_module.qr_code_reader()
+                    except:
+                        code = None
             motion_control.stop_the_car(motor_left, motor_right)
             
             if code is None:
                 #if no code, back out of bay 3
-                motion_control.go_back(motor_left, motor_right, 50)
-                sleep(0.2)
+                motion_control.go_back(motor_left, motor_right, 80)
+                sleep(0.4)
                 straight, temp = detection_module.straight_line_detection()
                 while temp != "junction_detected":
-                    straight, temp = detection_module.straight_line_detection()
                     alignment.align_to_line_back(motor_left, motor_right)
-                    motion_control.go_back(motor_left, motor_right, 50)
+                    motion_control.go_back(motor_left, motor_right, 80)
+                    straight, temp = detection_module.straight_line_detection()
                 motion_control.stop_the_car(motor_left, motor_right)
                 motion_control.go_forward(motor_left, motor_right, 30)
                 sleep(0.3)
@@ -136,37 +147,40 @@ def default_path(motor_left, motor_right, forklift):
                 motion_control.turn_left_90(motor_left, motor_right)
 
                 #go to bay 4
-                motion_control.go_forward(motor_left, motor_right, 50)
+                motion_control.go_forward(motor_left, motor_right, 80)
                 sleep(0.2)
                 straight, temp = detection_module.straight_line_detection()
                 while temp != "junction_detected":
-                    straight, temp = detection_module.straight_line_detection()
                     alignment.align_to_line(motor_left, motor_right)
-                    motion_control.go_forward(motor_left, motor_right, 50)
+                    motion_control.go_forward(motor_left, motor_right, 80)
+                    straight, temp = detection_module.straight_line_detection()
                 sleep(0.2)
                 motion_control.stop_the_car(motor_left, motor_right)
                 motion_control.turn_right_90(motor_left, motor_right)
 
                 #enter bay 4 and scan
-                motion_control.go_forward(motor_left, motor_right, 50)
+                motion_control.go_forward(motor_left, motor_right, 80)
                 straight, temp = detection_module.straight_line_detection()
                 while temp != "junction_detected":
-                    straight, temp = detection_module.straight_line_detection()
                     alignment.align_to_line(motor_left, motor_right)
-                    motion_control.go_forward(motor_left, motor_right, 50)
+                    motion_control.go_forward(motor_left, motor_right, 80)
+                    straight, temp = detection_module.straight_line_detection()
                     if code == None:
-                        code = detection_module.qr_code_reader()
+                        try:
+                            code = detection_module.qr_code_reader()
+                        except:
+                            code = None
                 motion_control.stop_the_car(motor_left, motor_right)
                 
                 if code is None:
                     #if no code, back out of bay 4
-                    motion_control.go_back(motor_left, motor_right, 50)
-                    sleep(0.2)
+                    motion_control.go_back(motor_left, motor_right, 80)
+                    sleep(0.4)
                     straight, temp = detection_module.straight_line_detection()
                     while temp != "right_detected":
                         straight, temp = detection_module.straight_line_detection()
                         alignment.align_to_line_back(motor_left, motor_right)
-                        motion_control.go_back(motor_left, motor_right, 50)
+                        motion_control.go_back(motor_left, motor_right, 80)
                     motion_control.stop_the_car(motor_left, motor_right)
                     motion_control.go_forward(motor_left, motor_right, 30)
                     sleep(0.3)
@@ -174,13 +188,13 @@ def default_path(motor_left, motor_right, forklift):
                     motion_control.turn_right_90(motor_left, motor_right)
 
                     #go to bay 1
-                    motion_control.go_forward(motor_left, motor_right, 50)
+                    motion_control.go_forward(motor_left, motor_right, 80)
                     sleep(0.2)
                     straight, temp = detection_module.straight_line_detection()
                     while temp != "junction_detected":
-                        straight, temp = detection_module.straight_line_detection()
                         alignment.align_to_line(motor_left, motor_right)
-                        motion_control.go_forward(motor_left, motor_right, 50)
+                        motion_control.go_forward(motor_left, motor_right, 80)
+                        straight, temp = detection_module.straight_line_detection()
                     sleep(0.2)
                     motion_control.stop_the_car(motor_left, motor_right)
                     motion_control.turn_left_90(motor_left, motor_right)
@@ -200,6 +214,7 @@ def default_path(motor_left, motor_right, forklift):
     return code
 
 
+
 # Sequence for when QR code is found to pick up and drop off the item
 
 def unloading_sequence(motor_left, motor_right, forklift, code):
@@ -214,7 +229,7 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
     motion_control.go_back(motor_left, motor_right, 50)
     sleep(0.2)
     straight, temp = detection_module.straight_line_detection()
-    while temp != "right_detected" and temp != "left_detected" and temp != "junction_detected":
+    while temp != "right_detected" or temp != "left_detected" or temp != "junction_detected":
         straight, temp = detection_module.straight_line_detection()
         alignment.align_to_line_back(motor_left, motor_right)
         motion_control.go_back(motor_left, motor_right, 50)
@@ -222,40 +237,7 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
 
     # Move to drop-off zone based on QR code data
     if "Rack A" in code:
-        distance = detection_module.distance_sensing()
-        if distance > 200:
-            print("Moving to Rack A drop-off zone")
-            motion_control.turn_right_90(motor_left, motor_right)
-            motion_control.go_forward(motor_left, motor_right, 50)
-            sleep(0.2)
-            straight, temp = detection_module.straight_line_detection()
-            while temp != "junction_detected":
-                straight, temp = detection_module.straight_line_detection()
-                alignment.align_to_line(motor_left, motor_right)
-                motion_control.go_forward(motor_left, motor_right, 50)
-            motion_control.stop_the_car(motor_left, motor_right)
-            motion_control.turn_right_90(motor_left, motor_right)
-        else:
-            motion_control.turn_right_90(motor_left, motor_right)
-
-    elif "Rack B" in code:
-        if distance > 200:
-            print("Moving to Rack B drop-off zone")
-            motion_control.turn_left_90(motor_left, motor_right)
-            motion_control.go_forward(motor_left, motor_right, 50)
-            sleep(0.2)
-            straight, temp = detection_module.straight_line_detection()
-            while temp != "junction_detected":
-                straight, temp = detection_module.straight_line_detection()
-                alignment.align_to_line(motor_left, motor_right)
-                motion_control.go_forward(motor_left, motor_right, 50)
-            motion_control.stop_the_car(motor_left, motor_right)
-            motion_control.turn_left_90(motor_left, motor_right)
-        else:
-            motion_control.turn_left_90(motor_left, motor_right)
-
-    else:
-        print("Unknown drop-off zone in QR code, returning to default path")
+        print("Moving to Rack A drop-off zone")
         motion_control.turn_right_90(motor_left, motor_right)
         motion_control.go_forward(motor_left, motor_right, 50)
         sleep(0.2)
@@ -265,38 +247,65 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
             alignment.align_to_line(motor_left, motor_right)
             motion_control.go_forward(motor_left, motor_right, 50)
         motion_control.stop_the_car(motor_left, motor_right)
+        motion_control.turn_right_90(motor_left, motor_right)
+
+    elif "Rack B" in code:
+        print("Moving to Rack B drop-off zone")
+        motion_control.turn_left_90(motor_left, motor_right)
+        while detection_module.distance_sensing() > 100:
+            motion_control.go_forward(motor_left, motor_right, 50)
+        motion_control.stop_the_car(motor_left, motor_right)
         motion_control.turn_left_90(motor_left, motor_right)
 
-    if "Lower" in code:  
+    else:
+        print("Unknown drop-off zone in QR code, returning to default path")
+        motion_control.go_forward(motor_left, motor_right, 50)
+        sleep(1)
+        motion_control.stop_the_car(motor_left, motor_right)
+
+        #placeholder for drop-off mechanism
+
+        print("Activating drop-off mechanism")
+        sleep(2)  # Simulate time taken for drop-off
+        print("Drop-off complete")
+
+    if "Lower" in code:
+        # Placeholder for raising forklift to correct height
+        print("Raising forklift to lower shelf height")
+        sleep(2)  # Simulate time taken to raise forklift
 
         if "1" in code:
-            counter = 1
+            while detection_module.distance_sensing() > 1000:
+                motion_control.go_forward(motor_left, motor_right, 50)
+            motion_control.stop_the_car(motor_left, motor_right)
 
         elif "2" in code:
-            counter = 2
+            while detection_module.distance_sensing() > 800:
+                motion_control.go_forward(motor_left, motor_right, 50)
+            motion_control.stop_the_car(motor_left, motor_right)
 
         elif "3" in code:
-            counter = 3
+            while detection_module.distance_sensing() > 600:
+                motion_control.go_forward(motor_left, motor_right, 50)
+            motion_control.stop_the_car(motor_left, motor_right)
         
         elif "4" in code:
-            counter = 4
+            while detection_module.distance_sensing() > 400:
+                motion_control.go_forward(motor_left, motor_right, 50)
+            motion_control.stop_the_car(motor_left, motor_right)
 
         elif "5" in code:
-            counter = 5
-
-        elif "6" in code:
-            counter = 6
-
-        for i in range(counter):
-            straight, temp = detection_module.distance_sensing()
-            sleep(0.3) 
-            motion_control.go_forward(motor_left, motor_right, 50)
-            while temp != "right_detected" and temp != "left_detected":
-                straight, temp = detection_module.straight_line_detection()
-                alignment.align_to_line(motor_left, motor_right)
+            while detection_module.distance_sensing() > 200:
                 motion_control.go_forward(motor_left, motor_right, 50)
+            motion_control.stop_the_car(motor_left, motor_right)
         
-        motion_control.stop_the_car(motor_left, motor_right)
+        elif "6" in code:
+            while detection_module.distance_sensing() > 100:
+                motion_control.go_forward(motor_left, motor_right, 50)
+            motion_control.stop_the_car(motor_left, motor_right)
+
+        else:
+            print("Oh no very bad")
         
         if "Rack A" in code:
             motion_control.turn_right_90(motor_left, motor_right)
@@ -505,4 +514,3 @@ def ending_sequence(motor_left, motor_right):
     sleep(2)
     motion_control.stop_the_car(motor_left, motor_right)
     motion_control.turn_around(motor_left, motor_right)
-    
