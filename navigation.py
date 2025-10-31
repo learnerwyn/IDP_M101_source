@@ -47,18 +47,16 @@ def default_path(motor_left, motor_right, forklift):
     
     if code is None:
         #if code is not read, back out of bay 1
-        motion_control.go_back(motor_left, motor_right, 80)
-        sleep(0.4)
+        motion_control.turn_around(motor_left, motor_right)
+        motion_control.go_forward(motor_left, motor_right, 80)
         straight, temp = detection_module.straight_line_detection()
-        while temp != "left_detected":
-            alignment.align_to_line_back(motor_left, motor_right)
-            motion_control.go_back(motor_left, motor_right, 80)
+        while temp != "right_detected":
+            alignment.align_to_line(motor_left, motor_right)
+            motion_control.go_forward(motor_left, motor_right, 80)
             straight, temp = detection_module.straight_line_detection()
-        motion_control.stop_the_car(motor_left, motor_right)
-        motion_control.go_forward(motor_left, motor_right, 30)
-        sleep(0.3)
-        motion_control.stop_the_car(motor_left, motor_right)
-        motion_control.turn_left_90(motor_left, motor_right)
+        sleep(0.2)
+        motion_control.stop_the_car(motor_left,motor_right)
+        motion_control.turn_right_90(motor_left, motor_right)
         
         #go to bay 2 entrance
         motion_control.go_forward(motor_left, motor_right, 80)
@@ -89,17 +87,17 @@ def default_path(motor_left, motor_right, forklift):
         
         if code is None:
             #if no code, back out of bay 2
-            motion_control.go_back(motor_left, motor_right, 80)
-            sleep(0.4)
+            motion_control.turn_around(motor_left, motor_right)
+            motion_control.go_forward(motor_left, motor_right, 80)
+            sleep(0.2)
+            straight, temp = detection_module.straight_line_detection()
             while temp != "junction_detected":
-                alignment.align_to_line_back(motor_left, motor_right)
-                motion_control.go_back(motor_left, motor_right, 80)
+                alignment.align_to_line(motor_left, motor_right)
+                motion_control.go_forward(motor_left, motor_right, 80)
                 straight, temp = detection_module.straight_line_detection()
+            sleep(0.2)
             motion_control.stop_the_car(motor_left, motor_right)
-            motion_control.go_forward(motor_left, motor_right, 30)
-            sleep(0.3)
-            motion_control.stop_the_car(motor_left, motor_right)
-            motion_control.turn_left_90(motor_left, motor_right)
+            motion_control.turn_right_90(motor_left, motor_right)
 
             #go to bay 3
             motion_control.go_forward(motor_left, motor_right, 80)
@@ -133,18 +131,17 @@ def default_path(motor_left, motor_right, forklift):
             
             if code is None:
                 #if no code, back out of bay 3
-                motion_control.go_back(motor_left, motor_right, 80)
+                motion_control.turn_around(motor_left, motor_right)
+                motion_control.go_forward(motor_left, motor_right, 80)
                 sleep(0.4)
                 straight, temp = detection_module.straight_line_detection()
                 while temp != "junction_detected":
-                    alignment.align_to_line_back(motor_left, motor_right)
-                    motion_control.go_back(motor_left, motor_right, 80)
+                    alignment.align_to_line(motor_left, motor_right)
+                    motion_control.go_forward(motor_left, motor_right, 80)
                     straight, temp = detection_module.straight_line_detection()
-                motion_control.stop_the_car(motor_left, motor_right)
-                motion_control.go_forward(motor_left, motor_right, 30)
                 sleep(0.3)
                 motion_control.stop_the_car(motor_left, motor_right)
-                motion_control.turn_left_90(motor_left, motor_right)
+                motion_control.turn_right_90(motor_left, motor_right)
 
                 #go to bay 4
                 motion_control.go_forward(motor_left, motor_right, 80)
@@ -174,18 +171,17 @@ def default_path(motor_left, motor_right, forklift):
                 
                 if code is None:
                     #if no code, back out of bay 4
-                    motion_control.go_back(motor_left, motor_right, 80)
+                    motion_control.turn_around(motor_left, motor_right)
+                    motion_control.go_forward(motor_left, motor_right, 80)
                     sleep(0.4)
                     straight, temp = detection_module.straight_line_detection()
-                    while temp != "right_detected":
-                        straight, temp = detection_module.straight_line_detection()
-                        alignment.align_to_line_back(motor_left, motor_right)
+                    while temp != "left_detected":
+                        alignment.align_to_line(motor_left, motor_right)
                         motion_control.go_back(motor_left, motor_right, 80)
-                    motion_control.stop_the_car(motor_left, motor_right)
-                    motion_control.go_forward(motor_left, motor_right, 30)
+                        straight, temp = detection_module.straight_line_detection()
                     sleep(0.3)
                     motion_control.stop_the_car(motor_left, motor_right)
-                    motion_control.turn_right_90(motor_left, motor_right)
+                    motion_control.turn_left_90(motor_left, motor_right)
 
                     #go to bay 1
                     motion_control.go_forward(motor_left, motor_right, 80)
