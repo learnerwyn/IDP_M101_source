@@ -102,15 +102,22 @@ def default_path(motor_left, motor_right, forklift):
             #go to bay 3
             motion_control.go_forward(motor_left, motor_right, 80)
             sleep(0.2)
+
             straight, temp = detection_module.straight_line_detection()
-            i = 0
-            while i < 2:
-                while temp != "right_detected":
-                    alignment.align_to_line(motor_left, motor_right)
-                    motion_control.go_forward(motor_left, motor_right, 80)
-                    straight, temp = detection_module.straight_line_detection()
-                sleep(0.2)
-                i += 1
+            while temp != "right_detected":
+                alignment.align_to_line(motor_left, motor_right)
+                motion_control.go_forward(motor_left, motor_right, 80)
+                straight, temp = detection_module.straight_line_detection()  
+
+            sleep(0.4)
+            straight, temp = detection_module.straight_line_detection()
+
+            while temp != "right_detected":
+                alignment.align_to_line(motor_left, motor_right)
+                motion_control.go_forward(motor_left, motor_right, 80)
+                straight, temp = detection_module.straight_line_detection()
+            
+            sleep(0.2)
             motion_control.stop_the_car(motor_left, motor_right)
             motion_control.turn_right_90(motor_left, motor_right)
             
@@ -173,13 +180,13 @@ def default_path(motor_left, motor_right, forklift):
                     #if no code, back out of bay 4
                     motion_control.turn_around(motor_left, motor_right)
                     motion_control.go_forward(motor_left, motor_right, 80)
-                    sleep(0.4)
+                    sleep(0.2)
                     straight, temp = detection_module.straight_line_detection()
                     while temp != "left_detected":
                         alignment.align_to_line(motor_left, motor_right)
-                        motion_control.go_back(motor_left, motor_right, 80)
+                        motion_control.go_forward(motor_left, motor_right, 80)
                         straight, temp = detection_module.straight_line_detection()
-                    sleep(0.3)
+                    sleep(0.2)
                     motion_control.stop_the_car(motor_left, motor_right)
                     motion_control.turn_left_90(motor_left, motor_right)
 
