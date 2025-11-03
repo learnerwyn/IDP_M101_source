@@ -45,7 +45,7 @@ def qr_code_reader():
     led.value(1)
     
     # Set up for the Pico, pin numbers will vary across boards.
-    i2c_bus = I2C(id=0, scl=Pin(19), sda=Pin(18), freq=400000) # I2C0 on GP16 & GP17
+    i2c_bus = I2C(id=0, scl=Pin(15), sda=Pin(14), freq=400000) # I2C0 on GP16 & GP17
 
     i2c_devs = i2c_bus.scan()
     # Uncomment this to see what peripherals were detected on the bus. We would
@@ -73,7 +73,7 @@ def qr_code_reader():
 
 def distance_sensing():
     # config I2C Bus
-    i2c_bus = I2C(id=0, sda=Pin(14), scl=Pin(15)) # I2C0 on GP8 & GP9
+    i2c_bus = I2C(id=0, sda=Pin(18), scl=Pin(19)) # I2C0 on GP8 & GP9
     # print(i2c_bus.scan())  # Get the address (nb 41=0x29, 82=0x52)
     
     # Setup vl53l0 object
