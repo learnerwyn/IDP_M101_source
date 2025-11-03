@@ -229,13 +229,14 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
     sleep(2)  # Simulate time taken for pickup
     print("Pickup complete")
 
-    motion_control.go_back(motor_left, motor_right, 50)
+    motion_control.turn_around(motor_left, motor_right)
+    motion_control.go_forward(motor_left, motor_right, 80)
     sleep(0.2)
     straight, temp = detection_module.straight_line_detection()
     while temp != "right_detected" or temp != "left_detected" or temp != "junction_detected":
         straight, temp = detection_module.straight_line_detection()
-        alignment.align_to_line_back(motor_left, motor_right)
-        motion_control.go_back(motor_left, motor_right, 50)
+        alignment.align_to_line(motor_left, motor_right)
+        motion_control.go_forward(motor_left, motor_right, 80)
     motion_control.stop_the_car(motor_left, motor_right)
 
     # Move to drop-off zone based on QR code data
