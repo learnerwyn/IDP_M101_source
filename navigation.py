@@ -17,7 +17,7 @@ def start_sequence(motor_left, motor_right):
     while temp != "junction_detected":
         alignment.align_to_line(motor_left, motor_right)
         motion_control.go_forward(motor_left, motor_right, 80)
-        straight, temp = detection_module.straight_line_detection()e
+        straight, temp = detection_module.straight_line_detection()
     sleep(0.2)
     motion_control.stop_the_car(motor_left, motor_right)
     motion_control.turn_left_90(motor_left, motor_right)
