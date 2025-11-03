@@ -675,11 +675,32 @@ def ending_sequence(motor_left, motor_right):
     print("Executing ending sequence to return to starting area")
 
     motion_control.turn_left_90(motor_left, motor_right)
-    while detection_module.distance_sensing() > 1000:
-        motion_control.go_forward(motor_left, motor_right, 50)
+    motion_control.go_forward(motor_left, motor_right, 80)
+    sleep(0.2)
+
+    straight, temp = detection_module.straight_line_detection()
+    while temp != "right_detected":
+        alignment.align_to_line(motor_left, motor_right)
+        motion_control.go_forward(motor_left, motor_right, 80)
+        straight, temp = detection_module.straight_line_detection()  
+
+    sleep(0.4)
+    straight, temp = detection_module.straight_line_detection()
+
+    while temp != "right_detected":
+        alignment.align_to_line(motor_left, motor_right)
+        motion_control.go_forward(motor_left, motor_right, 80)
+        straight, temp = detection_module.straight_line_detection()
+            
+    sleep(0.2)
     motion_control.stop_the_car(motor_left, motor_right)
     motion_control.turn_right_90(motor_left, motor_right)
-    motion_control.go_forward(motor_left, motor_right, 50)
-    sleep(2)
+    motion_control.go_forward(motor_left, motor_right, 80)
+    sleep(0.2)
+    while temp != "junction_detected":
+        alignment.align_to_line(motor_left, motor_right)
+        motion_control.go_forward(motor_left, motor_right, 80)
+        straight, temp = detection_module.straight_line_detection()
+    sleep(0.5)
     motion_control.stop_the_car(motor_left, motor_right)
     motion_control.turn_around(motor_left, motor_right)
