@@ -238,7 +238,7 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
     motion_control.go_forward(motor_left, motor_right, 80)
     sleep(0.2)
     straight, temp = detection_module.straight_line_detection()
-    while temp != "right_detected" or temp != "left_detected" or temp != "junction_detected":
+    while temp != "right_detected" and temp != "left_detected" and temp != "junction_detected":
         straight, temp = detection_module.straight_line_detection()
         alignment.align_to_line(motor_left, motor_right)
         motion_control.go_forward(motor_left, motor_right, 80)
