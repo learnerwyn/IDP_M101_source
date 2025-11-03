@@ -241,80 +241,119 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
 
     # Move to drop-off zone based on QR code data
     if "Rack A" in code:
-        print("Moving to Rack A drop-off zone")
-        motion_control.turn_right_90(motor_left, motor_right)
-        motion_control.go_forward(motor_left, motor_right, 50)
-        sleep(0.2)
-        straight, temp = detection_module.straight_line_detection()
-        while temp != "junction_detected":
-            straight, temp = detection_module.straight_line_detection()
-            alignment.align_to_line(motor_left, motor_right)
+        distance = detection_module.distance_sensing()
+        if distance is not None and distance > 200:
+            print("Moving to front of bay 1")
+            motion_control.turn_left_90(motor_left, motor_right)
             motion_control.go_forward(motor_left, motor_right, 50)
-        motion_control.stop_the_car(motor_left, motor_right)
-        motion_control.turn_right_90(motor_left, motor_right)
+            sleep(0.2)
+            straight, temp = detection_module.straight_line_detection()
+            while temp != "junction_detected":
+                straight, temp = detection_module.straight_line_detection()
+                alignment.align_to_line(motor_left, motor_right)
+                motion_control.go_forward(motor_left, motor_right, 50)
+            motion_control.stop_the_car(motor_left, motor_right)
+            motion_control.turn_right_90(motor_left, motor_right)
+        else
+            print("Already at front of bay 1")
+            motion_control.turn_right_90(motor_left, motor_right)
 
     elif "Rack B" in code:
-        print("Moving to Rack B drop-off zone")
-        motion_control.turn_left_90(motor_left, motor_right)
-        while detection_module.distance_sensing() > 100:
+        distance = detection_module.distance_sensing()
+        if distance is not None and distance > 200:
+            print("Moving to front of bay 4")
+            motion_control.turn_right_90(motor_left, motor_right)
             motion_control.go_forward(motor_left, motor_right, 50)
-        motion_control.stop_the_car(motor_left, motor_right)
-        motion_control.turn_left_90(motor_left, motor_right)
+            sleep(0.2)
+            straight, temp = detection_module.straight_line_detection()
+            while temp != "junction_detected":
+                straight, temp = detection_module.straight_line_detection()
+                alignment.align_to_line(motor_left, motor_right)
+                motion_control.go_forward(motor_left, motor_right, 50)
+            motion_control.stop_the_car(motor_left, motor_right)
+            motion_control.turn_left_90(motor_left, motor_right)
+        else:
+            print("Already at front of bay 4")
+            motion_control.turn_left_90(motor_left, motor_right)
 
     else:
-        print("Unknown drop-off zone in QR code, returning to default path")
-        motion_control.go_forward(motor_left, motor_right, 50)
-        sleep(1)
-        motion_control.stop_the_car(motor_left, motor_right)
+        print("Invalid rack in QR code, returning to default path")
+        distance = detection_module.distance_sensing()
+        if distance is not None and distance > 200:
+            print("Moving to front of bay 1")
+            motion_control.turn_left_90(motor_left, motor_right)
+            motion_control.go_forward(motor_left, motor_right, 50)
+            sleep(0.2)
+            straight, temp = detection_module.straight_line_detection()
+            while temp != "junction_detected":
+                straight, temp = detection_module.straight_line_detection()
+                alignment.align_to_line(motor_left, motor_right)
+                motion_control.go_forward(motor_left, motor_right, 50)
+            motion_control.stop_the_car(motor_left, motor_right)
+            motion_control.turn_left_90(motor_left, motor_right)
+        else:
+            print("Already at front of bay 1")
+            motion_control.turn_around(motor_left, motor_right)
 
-        #placeholder for drop-off mechanism
-
-        print("Activating drop-off mechanism")
-        sleep(2)  # Simulate time taken for drop-off
-        print("Drop-off complete")
 
     if "Lower" in code:
-        # Placeholder for raising forklift to correct height
-        print("Raising forklift to lower shelf height")
-        sleep(2)  # Simulate time taken to raise forklift
+
+        counter = 0
 
         if "1" in code:
-            while detection_module.distance_sensing() > 1000:
-                motion_control.go_forward(motor_left, motor_right, 50)
-            motion_control.stop_the_car(motor_left, motor_right)
+            counter = 0
 
         elif "2" in code:
-            while detection_module.distance_sensing() > 800:
-                motion_control.go_forward(motor_left, motor_right, 50)
-            motion_control.stop_the_car(motor_left, motor_right)
+            counter = 1
 
         elif "3" in code:
-            while detection_module.distance_sensing() > 600:
-                motion_control.go_forward(motor_left, motor_right, 50)
-            motion_control.stop_the_car(motor_left, motor_right)
-        
+            counter = 2
+
         elif "4" in code:
-            while detection_module.distance_sensing() > 400:
-                motion_control.go_forward(motor_left, motor_right, 50)
-            motion_control.stop_the_car(motor_left, motor_right)
+            counter = 3
 
         elif "5" in code:
-            while detection_module.distance_sensing() > 200:
-                motion_control.go_forward(motor_left, motor_right, 50)
-            motion_control.stop_the_car(motor_left, motor_right)
+            counter = 4
         
         elif "6" in code:
-            while detection_module.distance_sensing() > 100:
-                motion_control.go_forward(motor_left, motor_right, 50)
-            motion_control.stop_the_car(motor_left, motor_right)
+            counter = 5
 
         else:
             print("Oh no very bad")
+
         
         if "Rack A" in code:
+            while counter > 0:
+                straight, temp = detection_module.straight_line_detection()
+                while temp != "right_detected":
+                    alignment.align_to_line(motor_left, motor_right)
+                    motion_control.go_forward(motor_left, motor_right, 50)
+                    straight, temp = detection_module.straight_line_detection()
+                sleep(0.4)
+                counter -= 1
+            straight, temp = detection_module.straight_line_detection()
+            while temp != "right_detected":
+                alignment.align_to_line(motor_left, motor_right)
+                motion_control.go_forward(motor_left, motor_right, 50)
+                straight, temp = detection_module.straight_line_detection()
+            motion_control.stop_the_car(motor_left, motor_right)
             motion_control.turn_right_90(motor_left, motor_right)
         
         elif "Rack B" in code:
+            while counter > 0:
+                straight, temp = detection_module.straight_line_detection()
+                while temp != "left_detected":
+                    alignment.align_to_line(motor_left, motor_right)
+                    motion_control.go_forward(motor_left, motor_right, 50)
+                    straight, temp = detection_module.straight_line_detection()
+                sleep(0.4)
+                counter -= 1
+            straight, temp = detection_module.straight_line_detection()
+            while temp != "left_detected":
+                alignment.align_to_line(motor_left, motor_right)
+                motion_control.go_forward(motor_left, motor_right, 50)
+                straight, temp = detection_module.straight_line_detection()
+            motion_control.stop_the_car(motor_left, motor_right)
             motion_control.turn_left_90(motor_left, motor_right)
 
         else:
