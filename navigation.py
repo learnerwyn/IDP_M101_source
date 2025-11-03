@@ -242,6 +242,7 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
         straight, temp = detection_module.straight_line_detection()
         alignment.align_to_line(motor_left, motor_right)
         motion_control.go_forward(motor_left, motor_right, 80)
+    sleep(0.2)
     motion_control.stop_the_car(motor_left, motor_right)
 
     # Move to drop-off zone based on QR code data
@@ -257,6 +258,7 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
                 straight, temp = detection_module.straight_line_detection()
                 alignment.align_to_line(motor_left, motor_right)
                 motion_control.go_forward(motor_left, motor_right, 50)
+            sleep(0.2)
             motion_control.stop_the_car(motor_left, motor_right)
             motion_control.turn_right_90(motor_left, motor_right)
         else:
@@ -275,6 +277,7 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
                 straight, temp = detection_module.straight_line_detection()
                 alignment.align_to_line(motor_left, motor_right)
                 motion_control.go_forward(motor_left, motor_right, 50)
+            sleep(0.2)
             motion_control.stop_the_car(motor_left, motor_right)
             motion_control.turn_left_90(motor_left, motor_right)
         else:
@@ -294,6 +297,7 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
                 straight, temp = detection_module.straight_line_detection()
                 alignment.align_to_line(motor_left, motor_right)
                 motion_control.go_forward(motor_left, motor_right, 50)
+            sleep(0.2)
             motion_control.stop_the_car(motor_left, motor_right)
             motion_control.turn_left_90(motor_left, motor_right)
         else:
@@ -343,6 +347,7 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
                 alignment.align_to_line(motor_left, motor_right)
                 motion_control.go_forward(motor_left, motor_right, 50)
                 straight, temp = detection_module.straight_line_detection()
+            sleep(0.2)
             motion_control.stop_the_car(motor_left, motor_right)
             motion_control.turn_right_90(motor_left, motor_right)
         
@@ -362,6 +367,7 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
                 alignment.align_to_line(motor_left, motor_right)
                 motion_control.go_forward(motor_left, motor_right, 50)
                 straight, temp = detection_module.straight_line_detection()
+            sleep(0.2)
             motion_control.stop_the_car(motor_left, motor_right)
             motion_control.turn_left_90(motor_left, motor_right)
 
@@ -387,6 +393,7 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
                 motion_control.go_forward(motor_left, motor_right, 50)
                 straight, temp = detection_module.straight_line_detection()
                 distance = detection_module.distance_sensing()
+            sleep(0.2)
             motion_control.stop_the_car(motor_left, motor_right)
             motion_control.turn_right_90(motor_left, motor_right)
 
@@ -397,6 +404,7 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
                 alignment.align_to_line(motor_left, motor_right)
                 motion_control.go_forward(motor_left, motor_right, 50)
                 straight, temp = detection_module.straight_line_detection()
+            sleep(0.2)
             motion_control.stop_the_car(motor_left, motor_right)
             motion_control.turn_right_90(motor_left, motor_right)
 
@@ -406,6 +414,7 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
                 motion_control.go_forward(motor_left, motor_right, 50)
                 straight, temp = detection_module.straight_line_detection()
                 distance = detection_module.distance_sensing()
+            sleep(0.2)
             motion_control.stop_the_car(motor_left, motor_right)
             motion_control.turn_left_90(motor_left, motor_right)
 
@@ -416,6 +425,7 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
                 alignment.align_to_line(motor_left, motor_right)
                 motion_control.go_forward(motor_left, motor_right, 50)
                 straight, temp = detection_module.straight_line_detection()
+            sleep(0.2)
             motion_control.stop_the_car(motor_left, motor_right)
             motion_control.turn_left_90(motor_left, motor_right)
 
@@ -429,6 +439,7 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
             alignment.align_to_line(motor_left, motor_right)
             motion_control.go_forward(motor_left, motor_right, 50)
             straight, temp = detection_module.straight_line_detection()
+        sleep(0.2)
         motion_control.stop_the_car(motor_left, motor_right)
 
         if "Rack A" in code:
@@ -440,6 +451,7 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
                 alignment.align_to_line(motor_left, motor_right)
                 motion_control.go_forward(motor_left, motor_right, 50)
                 straight, temp = detection_module.straight_line_detection()
+            sleep(0.2)
             motion_control.stop_the_car(motor_left, motor_right)
             motion_control.turn_right_90(motor_left, motor_right)
             
@@ -452,6 +464,7 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
                 alignment.align_to_line(motor_left, motor_right)
                 motion_control.go_forward(motor_left, motor_right, 50)
                 straight, temp = detection_module.straight_line_detection()
+            sleep(0.2)
             motion_control.stop_the_car(motor_left, motor_right)
             motion_control.turn_left_90(motor_left, motor_right)
 
@@ -498,6 +511,7 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
                 alignment.align_to_line(motor_left, motor_right)
                 motion_control.go_forward(motor_left, motor_right, 50)
                 straight, temp = detection_module.straight_line_detection()
+            sleep(0.2)
             motion_control.stop_the_car(motor_left, motor_right)
             motion_control.turn_left_90(motor_left, motor_right)
         
@@ -517,6 +531,7 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
                 alignment.align_to_line(motor_left, motor_right)
                 motion_control.go_forward(motor_left, motor_right, 50)
                 straight, temp = detection_module.straight_line_detection()
+            sleep(0.2)
             motion_control.stop_the_car(motor_left, motor_right)
             motion_control.turn_right_90(motor_left, motor_right)
 
@@ -543,6 +558,9 @@ def return_sequence(motor_left, motor_right, code):
         motion_control.go_back(motor_left, motor_right, 50)
         straight, temp = detection_module.straight_line_detection()
     motion_control.stop_the_car(motor_left, motor_right)
+    motion_control.go_forward(motor_left, motor_right, 50)
+    sleep(0.2)
+    motion_control.stop_the_car(motor_left, motor_right)
 
     if "Rack A" in code and "Lower" in code:
         motion_control.turn_right_90(motor_left, motor_right)
@@ -568,6 +586,7 @@ def return_sequence(motor_left, motor_right, code):
             distance = detection_module.distance_sensing()
             straight, temp = detection_module.straight_line_detection()
             distance = detection_module.distance_sensing()
+        sleep(0.2)
         motion_control.stop_the_car(motor_left, motor_right)
             
 
@@ -583,6 +602,7 @@ def return_sequence(motor_left, motor_right, code):
                 alignment.align_to_line(motor_left, motor_right)
                 motion_control.go_forward(motor_left, motor_right, 50)
                 straight, temp = detection_module.straight_line_detection()
+            sleep(0.2)
             motion_control.stop_the_car(motor_left, motor_right)
             motion_control.turn_left_90(motor_left, motor_right)
             print("Ready to start default path")
@@ -601,6 +621,7 @@ def return_sequence(motor_left, motor_right, code):
                 alignment.align_to_line(motor_left, motor_right)
                 motion_control.go_forward(motor_left, motor_right, 50)
                 straight, temp = detection_module.straight_line_detection()
+            sleep(0.2)
             motion_control.stop_the_car(motor_left, motor_right)
             motion_control.turn_left_90(motor_left, motor_right)
 
@@ -611,6 +632,7 @@ def return_sequence(motor_left, motor_right, code):
                 alignment.align_to_line(motor_left, motor_right)
                 motion_control.go_forward(motor_left, motor_right, 50)
                 straight, temp = detection_module.straight_line_detection()
+            sleep(0.2)
             motion_control.stop_the_car(motor_left, motor_right)
             motion_control.turn_left_90(motor_left, motor_right)
 
@@ -619,6 +641,7 @@ def return_sequence(motor_left, motor_right, code):
                 alignment.align_to_line(motor_left, motor_right)
                 motion_control.go_forward(motor_left, motor_right, 50)
                 straight, temp = detection_module.straight_line_detection()
+            sleep(0.2)
             motion_control.stop_the_car(motor_left, motor_right)
             motion_control.turn_right_90(motor_left, motor_right)
 
@@ -629,6 +652,7 @@ def return_sequence(motor_left, motor_right, code):
                 alignment.align_to_line(motor_left, motor_right)
                 motion_control.go_forward(motor_left, motor_right, 50)
                 straight, temp = detection_module.straight_line_detection()
+            sleep(0.2)
             motion_control.stop_the_car(motor_left, motor_right)
             motion_control.turn_right_90(motor_left, motor_right)
 
@@ -642,6 +666,7 @@ def return_sequence(motor_left, motor_right, code):
             alignment.align_to_line(motor_left, motor_right)
             motion_control.go_forward(motor_left, motor_right, 50)
             straight, temp = detection_module.straight_line_detection()
+        sleep(0.2)
         motion_control.stop_the_car(motor_left, motor_right)
         motion_control.turn_left(motor_left, motor_right)
 
@@ -652,6 +677,7 @@ def return_sequence(motor_left, motor_right, code):
             alignment.align_to_line(motor_left, motor_right)
             motion_control.go_forward(motor_left, motor_right, 50)
             straight, temp = detection_module.straight_line_detection()
+        sleep(0.2)
         motion_control.stop_the_car(motor_left, motor_right)
         motion_control.turn_left_90(motor_left, motor_right)
 
@@ -664,6 +690,7 @@ def return_sequence(motor_left, motor_right, code):
             motion_control.go_forward(motor_left, motor_right, 50)
             distance = detection_module.distance_sensing()
             straight, temp = detection_module.straight_line_detection()
+        sleep(0.2)
         motion_control.stop_the_car(motor_left, motor_right)
         print("Ready to start default path")
 
