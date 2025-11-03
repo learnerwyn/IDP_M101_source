@@ -248,10 +248,10 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
 
     # Move to drop-off zone based on QR code data
     if "Rack A" in code:
+        motion_control.turn_left_90(motor_left, motor_right)
         distance = detection_module.distance_sensing()
         if distance is not None and distance > 200:
             print("Moving to front of bay 1")
-            motion_control.turn_left_90(motor_left, motor_right)
             motion_control.go_forward(motor_left, motor_right, 50)
             sleep(0.2)
             straight, temp = detection_module.straight_line_detection()
@@ -267,10 +267,10 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
             motion_control.turn_right_90(motor_left, motor_right)
 
     elif "Rack B" in code:
+        motion_control.turn_right_90(motor_left, motor_right)
         distance = detection_module.distance_sensing()
         if distance is not None and distance > 200:
             print("Moving to front of bay 4")
-            motion_control.turn_right_90(motor_left, motor_right)
             motion_control.go_forward(motor_left, motor_right, 50)
             sleep(0.2)
             straight, temp = detection_module.straight_line_detection()
