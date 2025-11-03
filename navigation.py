@@ -13,6 +13,7 @@ def start_sequence(motor_left, motor_right):
         alignment.align_to_line(motor_left, motor_right)
         motion_control.go_forward(motor_left, motor_right, 80)
         straight, temp = detection_module.straight_line_detection()
+    sleep(0.2)
     straight, temp = detection_module.straight_line_detection()
     while temp != "junction_detected":
         alignment.align_to_line(motor_left, motor_right)
@@ -22,6 +23,7 @@ def start_sequence(motor_left, motor_right):
     motion_control.stop_the_car(motor_left, motor_right)
     motion_control.turn_left_90(motor_left, motor_right)
     motion_control.go_forward(motor_left, motor_right, 80)
+    sleep(0.2)
     straight, temp = detection_module.straight_line_detection()
     while temp != "junction_detected":
         straight, temp = detection_module.straight_line_detection()
@@ -30,7 +32,6 @@ def start_sequence(motor_left, motor_right):
     sleep(0.2)
     motion_control.stop_the_car(motor_left, motor_right)
     motion_control.turn_left_90(motor_left, motor_right)
-    
 
 # Default path for normal operation from zone 1 to zone 4
 
