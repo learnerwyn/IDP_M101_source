@@ -72,6 +72,7 @@ def turn_right_90(motor_left, motor_right):
     sleep(0.6) # time subject to adjustment
     motor_left.off()
     motor_right.off()
+    led.value(0)
     print("Turn Right Finish")
     
 def turn_left_90(motor_left, motor_right):
@@ -87,6 +88,7 @@ def turn_left_90(motor_left, motor_right):
     sleep(0.7) # time subject to adjustment
     motor_left.off()
     motor_right.off()
+    led.value(0)
     print("Turn Left Finish")
     
 def turn_around(motor_left, motor_right):
@@ -102,6 +104,7 @@ def turn_around(motor_left, motor_right):
     sleep(1.2) # time subject to adjustment
     motor_left.off()
     motor_right.off()
+    led.value(0)
     print("Turn Around Finish")
     
 def adjust_to_right(motor_left, motor_right):
