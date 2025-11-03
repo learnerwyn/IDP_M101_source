@@ -259,7 +259,7 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
                 motion_control.go_forward(motor_left, motor_right, 50)
             motion_control.stop_the_car(motor_left, motor_right)
             motion_control.turn_right_90(motor_left, motor_right)
-        else
+        else:
             print("Already at front of bay 1")
             motion_control.turn_right_90(motor_left, motor_right)
 
