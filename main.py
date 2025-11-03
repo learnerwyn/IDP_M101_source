@@ -2,6 +2,7 @@
 from machine import Pin, PWM
 import detection_module
 import motion_control
+import navigation
 from motion_control import Motor
 from forklift import Forklift
 from time import sleep
@@ -27,10 +28,14 @@ forklift = Forklift(
 
 
 # Complete start sequence and move to zone 1
-
+navigation.start_sequence(motor_left, motor_right)
 
 # Complete default path repeatedly until QR code is found or time limit is reached
-
+code = navigation.default_path()
+while code == None:
+    code = navigation.default_path()
+navigation.unloading_sequence(motor_left, motor_right, forklift, code)
+    
 
 # When a QR code is found, complete unloading sequence based on the QR code data
 # This includes a pickup mechanism, movement to the drop-off zone, and unloading mechanism
