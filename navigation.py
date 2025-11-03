@@ -328,6 +328,8 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
 
         
         if "Rack A" in code:
+            motion_control.go_forward(motor_left, motor_right, 50)
+            sleep(0.2)
             while counter > 0:
                 straight, temp = detection_module.straight_line_detection()
                 while temp != "right_detected":
@@ -345,6 +347,8 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
             motion_control.turn_right_90(motor_left, motor_right)
         
         elif "Rack B" in code:
+            motion_control.go_forward(motor_left, motor_right, 50)
+            sleep(0.2)
             while counter > 0:
                 straight, temp = detection_module.straight_line_detection()
                 while temp != "left_detected":
@@ -374,21 +378,44 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
         print("Drop-off complete")
 
     elif "Upper" in code:
-        while detection_module.distance_sensing() > 50:
-            motion_control.go_forward(motor_left, motor_right, 50)
-        motion_control.stop_the_car(motor_left, motor_right)
+        distance = detection_module.distance_sensing()
+        straight, temp = detection_module.straight_line_detection()
 
         if "Rack A" in code:
-            motion_control.turn_right_90(motor_left, motor_right)
-            while detection_module.distance_sensing() > 1000:
+            while detection_module.distance_sensing() > 300 or temp != "right_detected":
+                alignment.align_to_line(motor_left, motor_right)
                 motion_control.go_forward(motor_left, motor_right, 50)
+                straight, temp = detection_module.straight_line_detection()
+                distance = detection_module.distance_sensing()
+            motion_control.stop_the_car(motor_left, motor_right)
+            motion_control.turn_right_90(motor_left, motor_right)
+
+            motion_control.go_forward(motor_left, motor_right, 50)
+            sleep(0.2)
+            straight, temp = detection_module.straight_line_detection()
+            while temp != "right_detected":
+                alignment.align_to_line(motor_left, motor_right)
+                motion_control.go_forward(motor_left, motor_right, 50)
+                straight, temp = detection_module.straight_line_detection()
             motion_control.stop_the_car(motor_left, motor_right)
             motion_control.turn_right_90(motor_left, motor_right)
 
         elif "Rack B" in code:
-            motion_control.turn_left_90(motor_left, motor_right)
-            while detection_module.distance_sensing() > 1000:
+            while detection_module.distance_sensing() > 300 or temp != "left_detected":
+                alignment.align_to_line(motor_left, motor_right)
                 motion_control.go_forward(motor_left, motor_right, 50)
+                straight, temp = detection_module.straight_line_detection()
+                distance = detection_module.distance_sensing()
+            motion_control.stop_the_car(motor_left, motor_right)
+            motion_control.turn_left_90(motor_left, motor_right)
+
+            motion_control.go_forward(motor_left, motor_right, 50)
+            sleep(0.2)
+            straight, temp = detection_module.straight_line_detection()
+            while temp != "left_detected":
+                alignment.align_to_line(motor_left, motor_right)
+                motion_control.go_forward(motor_left, motor_right, 50)
+                straight, temp = detection_module.straight_line_detection()
             motion_control.stop_the_car(motor_left, motor_right)
             motion_control.turn_left_90(motor_left, motor_right)
 
