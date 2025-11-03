@@ -310,26 +310,51 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
 
         counter = 0
 
-        if "1" in code:
-            counter = 0
+        if "Rack A" in code:
 
-        elif "2" in code:
-            counter = 1
+            if "1" in code:
+                counter = 0
 
-        elif "3" in code:
-            counter = 2
+            elif "2" in code:
+                counter = 1
 
-        elif "4" in code:
-            counter = 3
+            elif "3" in code:
+                counter = 2
 
-        elif "5" in code:
-            counter = 4
+            elif "4" in code:
+                counter = 3
+
+            elif "5" in code:
+                counter = 4
         
-        elif "6" in code:
-            counter = 5
+            elif "6" in code:
+                counter = 5
 
-        else:
-            print("Oh no very bad")
+            else:
+                print("Oh no very bad")
+            
+        elif "Rack B" in code:
+
+            if "1" in code:
+                counter = 5
+
+            elif "2" in code:
+                counter = 4
+
+            elif "3" in code:
+                counter = 3
+
+            elif "4" in code:
+                counter = 2
+
+            elif "5" in code:
+                counter = 1
+        
+            elif "6" in code:
+                counter = 0
+
+            else:
+                print("Oh no very bad")
 
         
         if "Rack A" in code:
@@ -474,26 +499,50 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
 
         counter = 0
 
-        if "1" in code:
-            counter = 0
+        if "Rack A" in code:
 
-        elif "2" in code:
-            counter = 1
+            if "1" in code:
+                counter = 5
 
-        elif "3" in code:
-            counter = 2
+            elif "2" in code:
+                counter = 4
 
-        elif "4" in code:
-            counter = 3
+            elif "3" in code:
+                counter = 3
 
-        elif "5" in code:
-            counter = 4
+            elif "4" in code:
+                counter = 2
+
+            elif "5" in code:
+                counter = 1
         
-        elif "6" in code:
-            counter = 5
+            elif "6" in code:
+                counter = 0
 
-        else:
-            print("Oh no very bad")
+            else:
+                print("Oh no very bad")
+
+        elif "Rack B" in code:
+            if "1" in code:
+                counter = 0
+
+            elif "2" in code:
+                counter = 1
+
+            elif "3" in code:
+                counter = 2
+
+            elif "4" in code:
+                counter = 3
+
+            elif "5" in code:
+                counter = 4
+        
+            elif "6" in code:
+                counter = 5
+
+            else:
+                print("Oh no very bad")
 
         
         if "Rack A" in code:
