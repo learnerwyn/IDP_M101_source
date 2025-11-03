@@ -533,76 +533,139 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
     else:
         print("Invalid level in QR code, aborting unloading sequence")
 
-def return_sequence(motor_left, motor_right, code, sensor1, sensor2, sensor3, sensor4):
+def return_sequence(motor_left, motor_right, code):
     print("Returning to starting area")
 
-    if "Rack A" in code:
+    motion_control.go_back(motor_left, motor_right, 50)
+    sleep(0.2)
+    straight, temp = detection_module.straight_line_detection()
+    while temp != "junction_detected" and temp != "left_detected" and temp != "right_detected":
+        motion_control.go_back(motor_left, motor_right, 50)
+        straight, temp = detection_module.straight_line_detection()
+    motion_control.stop_the_car(motor_left, motor_right)
+
+    if "Rack A" in code and "Lower" in code:
+        motion_control.turn_right_90(motor_left, motor_right)
+
+    elif "Rack B" in code and "Lower" in code:
         motion_control.turn_left_90(motor_left, motor_right)
 
-    elif "Rack B" in code:
+    elif "Rack A" in code and "Upper" in code:
+        motion_control.turn_left_90(motor_left, motor_right)
+
+    elif "Rack B" in code and "Upper" in code:
         motion_control.turn_right_90(motor_left, motor_right)
 
     else:   
         print("We are cooked")
 
     if "Lower" in code:
-        while detection_module.distance_sensing() < 1850:
-            motion_control.go_back(motor_left, motor_right, 50)
+        distance = detection_module.distance_sensing()
+        straight, temp = detection_module.straight_line_detection()
+        while distance > 500 or temp != "junction_detected" and temp != "left_detected" and temp != "right_detected":
+            alignment.align_to_line(motor_left, motor_right)
+            motion_control.go_forward(motor_left, motor_right, 50)
+            distance = detection_module.distance_sensing()
+            straight, temp = detection_module.straight_line_detection()
+            distance = detection_module.distance_sensing()
         motion_control.stop_the_car(motor_left, motor_right)
+            
 
         if "Rack A" in code:
-            motion_control.turn_around(motor_left, motor_right)
+            print("Ready to start default path")
 
         elif "Rack B" in code:
-            motion_control.turn_left(motor_left, motor_right)
-            while detection_module.distance_sensing() > 100:
+            motion_control.turn_right_90(motor_left, motor_right)
+            motion_control.go_forward(motor_left, motor_right, 50)
+            sleep(0.2)
+            straight, temp = detection_module.straight_line_detection()
+            while temp != "junction_detected":
+                alignment.align_to_line(motor_left, motor_right)
                 motion_control.go_forward(motor_left, motor_right, 50)
+                straight, temp = detection_module.straight_line_detection()
             motion_control.stop_the_car(motor_left, motor_right)
             motion_control.turn_left_90(motor_left, motor_right)
+            print("Ready to start default path")
 
         else:
             print("Oh no we're lost")
     
     elif "Upper" in code:
-        while detection_module.distance_sensing() > 100:
-            motion_control.go_forward(motor_left, motor_right, 50)
-        motion_control.stop_the_car(motor_left, motor_right)
+
+        motion_control.go_forward(motor_left, motor_right, 50)
+        sleep(0.2)
+        straight, temp = detection_module.straight_line_detection()
 
         if "Rack A" in code:
-            motion_control.turn_left_90(motor_left, motor_right)
-            while detection_module.distance_sensing() > 500:
+            while temp != "left_detected":
+                alignment.align_to_line(motor_left, motor_right)
                 motion_control.go_forward(motor_left, motor_right, 50)
+                straight, temp = detection_module.straight_line_detection()
+            motion_control.stop_the_car(motor_left, motor_right)
+            motion_control.turn_left_90(motor_left, motor_right)
+
+            motion_control.go_forward(motor_left, motor_right, 50)
+            sleep(0.2)
+            straight, temp = detection_module.straight_line_detection()
+            while temp != "left_detected":
+                alignment.align_to_line(motor_left, motor_right)
+                motion_control.go_forward(motor_left, motor_right, 50)
+                straight, temp = detection_module.straight_line_detection()
             motion_control.stop_the_car(motor_left, motor_right)
             motion_control.turn_left_90(motor_left, motor_right)
 
         elif "Rack B" in code:
-            motion_control.turn_right_90(motor_left, motor_right)
-            while detection_module.distance_sensing() > 500:
+            while temp != "right_detected":
+                alignment.align_to_line(motor_left, motor_right)
                 motion_control.go_forward(motor_left, motor_right, 50)
+                straight, temp = detection_module.straight_line_detection()
+            motion_control.stop_the_car(motor_left, motor_right)
+            motion_control.turn_right_90(motor_left, motor_right)
+
+            motion_control.go_forward(motor_left, motor_right, 50)
+            sleep(0.2)
+            straight, temp = detection_module.straight_line_detection()
+            while temp != "right_detected":
+                alignment.align_to_line(motor_left, motor_right)
+                motion_control.go_forward(motor_left, motor_right, 50)
+                straight, temp = detection_module.straight_line_detection()
             motion_control.stop_the_car(motor_left, motor_right)
             motion_control.turn_right_90(motor_left, motor_right)
 
         else:
             print("Now we're really in trouble")
 
-        while sensor1.value() == 0 or sensor4.value() == 0:
-            motion_control.go_forward(motor_left, motor_right, 20)
+        motion_control.go_forward(motor_left, motor_right, 50)
+        sleep(0.2)
+        straight, temp = detection_module.straight_line_detection()
+        while temp != "junction_detected":
+            alignment.align_to_line(motor_left, motor_right)
+            motion_control.go_forward(motor_left, motor_right, 50)
+            straight, temp = detection_module.straight_line_detection()
         motion_control.stop_the_car(motor_left, motor_right)
+        motion_control.turn_left(motor_left, motor_right)
 
-        while detection_module.distance_sensing() > 200:
-            motion_control.go_forward(motor_left, motor_right, 20)
+        motion_control.go_forward(motor_left, motor_right, 50)
+        sleep(0.2)
+        straight, temp = detection_module.straight_line_detection()
+        while temp != "left_detected":
+            alignment.align_to_line(motor_left, motor_right)
+            motion_control.go_forward(motor_left, motor_right, 50)
+            straight, temp = detection_module.straight_line_detection()
         motion_control.stop_the_car(motor_left, motor_right)
         motion_control.turn_left_90(motor_left, motor_right)
 
-        while detection_module.distance_sensing() > 200:
+        motion_control.go_forward(motor_left, motor_right, 50)
+        sleep(0.2)
+        straight, temp = detection_module.straight_line_detection()
+        distance = detection_module.distance_sensing()
+        while distance > 500 or temp != "left_detected":
+            alignment.align_to_line(motor_left, motor_right)
             motion_control.go_forward(motor_left, motor_right, 50)
+            distance = detection_module.distance_sensing()
+            straight, temp = detection_module.straight_line_detection()
         motion_control.stop_the_car(motor_left, motor_right)
-        motion_control.turn_right_90(motor_left, motor_right)
-
-        while detection_module.distance_sensing() < 1850:
-            motion_control.go_back(motor_left, motor_right, 50)
-        motion_control.stop_the_car(motor_left, motor_right)
-        motion_control.turn_around(motor_left, motor_right)
+        print("Ready to start default path")
 
     else:
         print("Something has gone terribly wrong")
