@@ -310,7 +310,7 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
 
         counter = 0
 
-        if "Rack A" in code:
+        if "Rack B" in code:
 
             if "1" in code:
                 counter = 0
@@ -333,7 +333,7 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
             else:
                 print("Oh no very bad")
             
-        elif "Rack B" in code:
+        elif "Rack A" in code:
 
             if "1" in code:
                 counter = 5
@@ -499,7 +499,7 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
 
         counter = 0
 
-        if "Rack A" in code:
+        if "Rack B" in code:
 
             if "1" in code:
                 counter = 5
@@ -522,7 +522,7 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
             else:
                 print("Oh no very bad")
 
-        elif "Rack B" in code:
+        elif "Rack A" in code:
             if "1" in code:
                 counter = 0
 
