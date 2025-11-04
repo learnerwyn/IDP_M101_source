@@ -5,7 +5,7 @@ import motion_control
 import navigation
 from motion_control import Motor
 from forklift import Forklift
-from time import sleep
+import time
 from libs.tiny_code_reader.tiny_code_reader import TinyCodeReader
 from libs.VL53L0X.VL53L0X import VL53L0X
 
@@ -26,19 +26,39 @@ forklift = Forklift(
 
 # Start a timer for 4 ish minutes in order to complete parking sequence within time limit
 
+#Set a timer for 270 seconds to allow for parking sequence
+
+start_time = time.ticks_ms()
+time_limit = 270000  # 270 seconds in milliseconds
+end_time = start_time + time_limit
 
 # Complete start sequence and move to zone 1
+
 navigation.start_sequence(motor_left, motor_right)
 
-# Complete default path repeatedly until QR code is found or time limit is reached
-code = navigation.default_path()
-while code == None:
-    code = navigation.default_path()
-navigation.unloading_sequence(motor_left, motor_right, forklift, code)
+while time.ticks_ms() < end_time:
+
+    code = navigation.default_path(motor_left, motor_right, forklift)
+
+    #when code has been found, carry out unloading sequence
+
+    if code:
+
+        navigation.unloading_sequence(motor_left, motor_right, forklift, code)
+
+        #after unloading sequence, return to default path
+
+        navigation.return_sequence(motor_left, motor_right, code)
+
+        code = None
+
+    else:
+
+        continue
+
+# After time limit is reached, carry out parking sequence
+
+navigation.ending_sequence(motor_left, motor_right)
     
 
-# When a QR code is found, complete unloading sequence based on the QR code data
-# This includes a pickup mechanism, movement to the drop-off zone, and unloading mechanism
 
-
-# When the time limit is reached, complete parking sequence to park in the starting area
