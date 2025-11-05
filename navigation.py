@@ -428,13 +428,18 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
 
         if "Rack A" in code:
             counter = 6
-            while counter > 0:
+            while counter > 1:
                 while temp != "right_detected":
                     alignment.align_to_line(motor_left, motor_right)
                     motion_control.go_forward(motor_left, motor_right, 80)
                     straight, temp = detection_module.straight_line_detection()
                 counter -= 1
-                sleep(0.2)
+                sleep(0.4)
+            while temp != "right_detected":
+                alignment.align_to_line(motor_left, motor_right)
+                motion_control.go_forward(motor_left, motor_right, 80)
+                straight, temp = detection_module.straight_line_detection()
+            sleep(0.2)
             motion_control.stop_the_car(motor_left, motor_right)
             motion_control.turn_right_90(motor_left, motor_right)
 
@@ -451,13 +456,18 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
 
         elif "Rack B" in code:
             counter = 6
-            while counter > 0:
+            while counter > 1:
                 while temp != "left_detected":
                     alignment.align_to_line(motor_left, motor_right)
                     motion_control.go_forward(motor_left, motor_right, 80)
                     straight, temp = detection_module.straight_line_detection()
                 counter -= 1
-                sleep(0.2)
+                sleep(0.4)
+            while temp != "left_detected":
+                alignment.align_to_line(motor_left, motor_right)
+                motion_control.go_forward(motor_left, motor_right, 80)
+                straight, temp = detection_module.straight_line_detection()
+            sleep(0.2)
             motion_control.stop_the_car(motor_left, motor_right)
             motion_control.turn_left_90(motor_left, motor_right)
 
@@ -649,19 +659,57 @@ def return_sequence(motor_left, motor_right, code):
         print("We are cooked")
 
     if "Lower" in code:
-        distance = detection_module.distance_sensing()
-        straight, temp = detection_module.straight_line_detection()
-        while distance > 500 or temp != "junction_detected" and temp != "left_detected" and temp != "right_detected":
-            alignment.align_to_line(motor_left, motor_right)
-            motion_control.go_forward(motor_left, motor_right, 80)
-            distance = detection_module.distance_sensing()
-            straight, temp = detection_module.straight_line_detection()
-            distance = detection_module.distance_sensing()
-        sleep(0.2)
-        motion_control.stop_the_car(motor_left, motor_right)
+
+        if "Rack A" in code:
+
+            if "1" in code:
+                counter = 5
+
+            elif "2" in code:
+                counter = 4
+
+            elif "3" in code:
+                counter = 3
+
+            elif "4" in code:
+                counter = 2
+
+            elif "5" in code:
+                counter = 1
+
+            elif "6" in code:
+                counter = 0
+
+        elif "Rack B" in code:
+
+            if "1" in code:
+                counter = 0
+
+            elif "2" in code:
+                counter = 1
+
+            elif "3" in code:
+                counter = 2
+
+            elif "4" in code:
+                counter = 3
+
+            elif "5" in code:
+                counter = 4
+
+            elif "6" in code:
+                counter = 5
             
 
         if "Rack A" in code:
+            while counter > 0:
+                while temp != "left_detected":
+                    alignment.align_to_line(motor_left, motor_right)
+                    motion_control.go_forward(motor_left, motor_right, 80)
+                    straight, temp = detection_module.straight_line_detection()
+                counter -= 1
+                sleep(0.2)
+            motion_control.stop_the_car(motor_left, motor_right)
             print("Ready to start default path")
 
         elif "Rack B" in code:
