@@ -427,12 +427,14 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
         straight, temp = detection_module.straight_line_detection()
 
         if "Rack A" in code:
-            while detection_module.distance_sensing() > 300 or temp != "right_detected":
-                alignment.align_to_line(motor_left, motor_right)
-                motion_control.go_forward(motor_left, motor_right, 80)
-                straight, temp = detection_module.straight_line_detection()
-                distance = detection_module.distance_sensing()
-            sleep(0.2)
+            counter = 6
+            while counter > 0:
+                while temp != "right_detected":
+                    alignment.align_to_line(motor_left, motor_right)
+                    motion_control.go_forward(motor_left, motor_right, 80)
+                    straight, temp = detection_module.straight_line_detection()
+                counter -= 1
+                sleep(0.2)
             motion_control.stop_the_car(motor_left, motor_right)
             motion_control.turn_right_90(motor_left, motor_right)
 
@@ -448,12 +450,14 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
             motion_control.turn_right_90(motor_left, motor_right)
 
         elif "Rack B" in code:
-            while detection_module.distance_sensing() > 300 or temp != "left_detected":
-                alignment.align_to_line(motor_left, motor_right)
-                motion_control.go_forward(motor_left, motor_right, 80)
-                straight, temp = detection_module.straight_line_detection()
-                distance = detection_module.distance_sensing()
-            sleep(0.2)
+            counter = 6
+            while counter > 0:
+                while temp != "left_detected":
+                    alignment.align_to_line(motor_left, motor_right)
+                    motion_control.go_forward(motor_left, motor_right, 80)
+                    straight, temp = detection_module.straight_line_detection()
+                counter -= 1
+                sleep(0.2)
             motion_control.stop_the_car(motor_left, motor_right)
             motion_control.turn_left_90(motor_left, motor_right)
 
