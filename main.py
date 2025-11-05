@@ -53,7 +53,7 @@ while time.ticks_ms() < end_time:
         code = None
 
     else:
-
+ 
         continue
 
 # After time limit is reached, carry out parking sequence

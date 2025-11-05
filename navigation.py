@@ -2,6 +2,7 @@ import detection_module
 import motion_control
 import alignment
 from time import sleep
+import forklift
 
 #Starting sequence to make the robot leave the starting area and go to zone 1
 
@@ -249,12 +250,6 @@ def default_path(motor_left, motor_right, forklift):
 def unloading_sequence(motor_left, motor_right, forklift, code):
     print(f"Starting unloading sequence for QR code: {code}")
 
-    # Placeholder for pickup mechanism
-
-    print("Activating pickup mechanism")
-    forklift.goToRaisedLevel()  # Simulate time taken for pickup
-    print("Pickup complete")
-
     motion_control.turn_around(motor_left, motor_right)
     motion_control.go_forward(motor_left, motor_right, 80)
     sleep(0.2)
@@ -421,9 +416,7 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
         sleep(1)
         motion_control.stop_the_car(motor_left, motor_right)
 
-        # Placeholder for drop-off mechanism
-        print("Activating drop-off mechanism")
-        sleep(2)  # Simulate time taken for drop-off
+        forklift.goToGroundLevel()
         print("Drop-off complete")
 
     elif "Upper" in code:
@@ -625,9 +618,7 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
         sleep(1)
         motion_control.stop_the_car(motor_left, motor_right)
 
-        # Placeholder for drop-off mechanism
-        print("Activating drop-off mechanism")
-        forklift.goToGroundLevel()  
+        forklift.goToGroundLevel()
         print("Drop-off complete")
 
     else:
@@ -650,6 +641,7 @@ def return_sequence(motor_left, motor_right, code):
         motion_control.go_forward(motor_left, motor_right, 80)
         sleep(0.2)
         motion_control.stop_the_car(motor_left, motor_right)
+        forklift.goToRaisedLevel()
 
     if "Rack A" in code and "Lower" in code:
         motion_control.turn_right_90(motor_left, motor_right)
