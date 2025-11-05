@@ -214,24 +214,28 @@ def default_path(motor_left, motor_right, forklift):
                 
                 else:
                     print(f"QR code found in zone 4: {code}")
+                    forklift.goToGroundLevel()
                     motion_control.go_forward(motor_left, motor_right, 30)
                     sleep(0.2)
                     motion_control.stop_the_car(motor_left, motor_right)
                     forklift.goToRaisedLevel()
             else:
                 print(f"QR code found in zone 3: {code}")
+                forklift.goToGroundLevel()
                 motion_control.go_forward(motor_left, motor_right, 30)
                 sleep(0.2)
                 motion_control.stop_the_car(motor_left, motor_right)
                 forklift.goToRaisedLevel()
         else:
             print(f"QR code found in zone 2: {code}")
+            forklift.goToGroundLevel()
             motion_control.go_forward(motor_left, motor_right, 30)
             sleep(0.2)
             motion_control.stop_the_car(motor_left, motor_right)
             forklift.goToRaisedLevel()
     else:
         print(f"QR code found in zone 1: {code}")
+        forklift.goToGroundLevel() 
         motion_control.go_forward(motor_left, motor_right, 30)
         sleep(0.2)
         motion_control.stop_the_car(motor_left, motor_right)
@@ -470,6 +474,22 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
 
         else:
             print("Now we're really in trouble")
+
+        motion_control.go_forward(motor_left, motor_right, 80)
+        sleep(0.2)
+        straight, temp = detection_module.straight_line_detection()
+        while temp != "left_detected" and temp != "right_detected":
+            alignment.align_to_line(motor_left, motor_right)
+            motion_control.go_forward(motor_left, motor_right, 80)
+            straight, temp = detection_module.straight_line_detection()
+        sleep(0.2)
+        motion_control.stop_the_car(motor_left, motor_right)
+
+        if "Rack A" in code:
+            motion_control.turn_right_90(motor_left, motor_right)
+
+        if "Rack B" in code:
+            motion_control.turn_left_90(motor_left, motor_right)
 
         motion_control.go_forward(motor_left, motor_right, 80)
         sleep(0.2)
