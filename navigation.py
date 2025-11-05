@@ -248,7 +248,7 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
     # Placeholder for pickup mechanism
 
     print("Activating pickup mechanism")
-    sleep(2)  # Simulate time taken for pickup
+    forklift.goToRaisedLevel()  # Simulate time taken for pickup
     print("Pickup complete")
 
     motion_control.turn_around(motor_left, motor_right)
@@ -619,7 +619,7 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
 
         # Placeholder for drop-off mechanism
         print("Activating drop-off mechanism")
-        sleep(2)  # Simulate time taken for drop-off
+        forklift.goToGroundLevel()  
         print("Drop-off complete")
 
     else:
