@@ -561,6 +561,7 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
         if "Rack A" in code:
             motion_control.go_forward(motor_left, motor_right, 80)
             sleep(0.2)
+            straight, temp = detection_module.straight_line_detection()
             while counter > 0:
                 straight, temp = detection_module.straight_line_detection()
                 while temp != "left_detected":
@@ -581,6 +582,7 @@ def unloading_sequence(motor_left, motor_right, forklift, code):
         elif "Rack B" in code:
             motion_control.go_forward(motor_left, motor_right, 80)
             sleep(0.2)
+            straight, temp = detection_module.straight_line_detection()
             while counter > 0:
                 straight, temp = detection_module.straight_line_detection()
                 while temp != "right_detected":
@@ -690,17 +692,42 @@ def return_sequence(motor_left, motor_right, code):
         if "Rack A" in code:
             motion_control.go_forward(motor_left, motor_right, 80)
             sleep(0.2)
+            straight, temp = detection_module.straight_line_detection()
             while counter > 0:
                 while temp != "left_detected":
                     alignment.align_to_line(motor_left, motor_right)
                     motion_control.go_forward(motor_left, motor_right, 80)
                     straight, temp = detection_module.straight_line_detection()
                 counter -= 1
-                sleep(0.2)
+                sleep(0.4)
+            straight, temp = detection_module.straight_line_detection()
+            while temp != "left_detected":
+                alignment.align_to_line(motor_left, motor_right)
+                motion_control.go_forward(motor_left, motor_right, 80)
+                straight, temp = detection_module.straight_line_detection()
+            sleep(0.2)
             motion_control.stop_the_car(motor_left, motor_right)
             print("Ready to start default path")
 
         elif "Rack B" in code:
+            motion_control.go_forward(motor_left, motor_right, 80)
+            sleep(0.2)
+            straight, temp = detection_module.straight_line_detection()
+            while counter > 0:
+                while temp != "right_detected":
+                    alignment.align_to_line(motor_left, motor_right)
+                    motion_control.go_forward(motor_left, motor_right, 80)
+                    straight, temp = detection_module.straight_line_detection()
+                counter -= 1
+                sleep(0.4)
+            straight, temp = detection_module.straight_line_detection()
+            while temp != "right_detected":
+                alignment.align_to_line(motor_left, motor_right)
+                motion_control.go_forward(motor_left, motor_right, 80)
+                straight, temp = detection_module.straight_line_detection()
+            sleep(0.2)
+            motion_control.stop_the_car(motor_left, motor_right)
+
             motion_control.turn_right_90(motor_left, motor_right)
             motion_control.go_forward(motor_left, motor_right, 80)
             sleep(0.2)
@@ -790,13 +817,23 @@ def return_sequence(motor_left, motor_right, code):
 
         motion_control.go_forward(motor_left, motor_right,80)
         sleep(0.2)
+        counter = 6
         straight, temp = detection_module.straight_line_detection()
-        distance = detection_module.distance_sensing()
-        while distance > 500 or temp != "left_detected":
+    
+        while counter > 0:
+            while temp != "left_detected":
+                alignment.align_to_line(motor_left, motor_right)
+                motion_control.go_forward(motor_left, motor_right, 80)
+                straight, temp = detection_module.straight_line_detection()
+            counter -= 1
+            sleep(0.4)
+        while temp != "left_detected":
             alignment.align_to_line(motor_left, motor_right)
             motion_control.go_forward(motor_left, motor_right, 80)
-            distance = detection_module.distance_sensing()
             straight, temp = detection_module.straight_line_detection()
+        sleep(0.2)
+        motion_control.stop_the_car(motor_left, motor_right)
+
         sleep(0.2)
         motion_control.stop_the_car(motor_left, motor_right)
         print("Ready to start default path")
