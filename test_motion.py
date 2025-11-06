@@ -1,3 +1,6 @@
+# file containing tests for varius motion and detection functions
+# this was quite often imported as main.py to thonny IDE for sequential testing
+
 from machine import Pin, PWM
 from time import sleep
 

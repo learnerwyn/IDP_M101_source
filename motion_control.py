@@ -1,6 +1,7 @@
 from machine import Pin, PWM
 from time import sleep
 
+# code to check the state of the start button
 def general_push_button():
     #Set the button pin
     button_pin = 27
@@ -10,6 +11,7 @@ def general_push_button():
         bot_state = True
     return bot_state
 
+# Motor control class
 class Motor:
     def __init__(self, dirPin, PWMPin):
         self.mDir = Pin(dirPin, Pin.OUT)  # set motor direction pin
@@ -31,6 +33,8 @@ class Motor:
 # Set the two motors information, detailed PIN number subject to change here
 # motor_left = Motor(dirPin=4, PWMPin=5)  # Motor 1 is controlled from Motor Driv2 #1, which is on GP4/5
 # motor_right = Motor(dirPin=4, PWMPin=5)
+
+# Functions to control the car movement, self explanatory from the function names
 
 def go_forward(motor_left, motor_right, speed):
     # turn a led on when one motor is on, pin subject to adjustment
