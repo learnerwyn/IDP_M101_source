@@ -22,7 +22,7 @@ motor_right = Motor(dirPin=4, PWMPin=5)
 forklift = Forklift(13)
 
 
-# Start a timer for 4 ish minutes in order to complete parking sequence within time limit
+# Start a timer for 4.5 minutes in order to complete parking sequence within time limit
 
 #Set a timer for 270 seconds to allow for parking sequence
 
@@ -51,12 +51,9 @@ while time.ticks_ms() < end_time:
         code = None
 
     else:
-
+ 
         continue
 
 # After time limit is reached, carry out parking sequence
 
 navigation.ending_sequence(motor_left, motor_right)
-    
-
-

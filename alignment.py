@@ -6,20 +6,27 @@ import motion_control
 # If the front sensor does not detect the line, but either left or right sensor does, the robot will adjust its position accordingly.
 
 def align_to_line(motor_left, motor_right):
-    
+
+    # use straight line detection to determine alignment
+
     straight, temp = detection_module.straight_line_detection()
-    
+
     if straight != True:
-        # print("Aligned with the line.")
+
+        # if not aligned, adjust position based on which side the line is detected
+
         if temp == "misaligned_to_right":
             print("Bot drifted right. Adjusting position...")
             motion_control.adjust_to_left(motor_left, motor_right)  # Turn left slightly
+
         elif temp == "misaligned_to_left":
             print("Bot drifted left. Adjusting position...")
             motion_control.adjust_to_right(motor_left, motor_right)  # Turn right slightly
         
 def align_to_line_back(motor_left, motor_right):
+
     # alignment protocol when the bot is going back
+    # didnt work very well in testing so is not used in the main program
     
     straight, temp = detection_module.straight_line_detection()
     

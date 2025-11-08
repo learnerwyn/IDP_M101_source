@@ -1,5 +1,5 @@
 from machine import Pin, PWM
-from utime import sleep
+from time import sleep
 
 class Forklift:
     def __init__(self, pwm_pin, ground_position = 14417, raised_position = 12452):
@@ -9,12 +9,18 @@ class Forklift:
     
     def _updateServo(self, position):
         self.pwm.duty_u16(position)
+
+    # Lower the forklift to ground level
     
     def goToGroundLevel(self):
         self._updateServo(self.ground_position)
+
+    # Raise the forklift to raised level
     
     def goToRaisedLevel(self):
         self._updateServo(self.raised_position)
+
+# test for the forklift positions
 
 if __name__ == "__main__":
     forklift = Forklift(15)

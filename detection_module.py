@@ -15,21 +15,35 @@ def straight_line_detection():
     sensor3 = Pin(sensor3_pin, Pin.IN, Pin.PULL_DOWN)
     sensor4_pin = 12
     sensor4 = Pin(sensor4_pin, Pin.IN, Pin.PULL_DOWN)
+
+    # set default values
     
     straight = None
     temp = None
+
+    # use the sensor values to assign values to straight and temp
+
+    # straight is only true when both middle sensors detect the line and both outer sensors do not
+
     if sensor2.value() == sensor3.value() and sensor1.value() == sensor4.value() and sensor1.value() != sensor2.value():
         straight = True
     else:
         straight = False
+
+    # temp is assigned based on various combinations of sensor values
+
         if sensor2.value() == 1 and sensor3.value() == 0:
             temp = "misaligned_to_right"
+
         elif sensor2.value() == 0 and sensor3.value() == 1:
             temp = "misaligned_to_left"
+
         elif sensor1.value() == 1 and sensor4.value() == 1:
             temp = "junction_detected"
+
         elif sensor4.value() == 1 and sensor1.value() == 0:
             temp = "right_detected"
+
         elif sensor1.value() == 1 and sensor4.value() == 0:
             temp = "left_detected"
         
@@ -83,6 +97,7 @@ def distance_sensing():
 
     print("Starting vl53l0...")
 
+    # take the distance reading
     vl53l0.start()
     distance = vl53l0.read()
     print(f"Distance = {distance}mm")
