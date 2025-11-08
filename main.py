@@ -19,9 +19,7 @@ while bot_state == False:
 motor_left = Motor(dirPin=7, PWMPin=6)  # Motor 1 is controlled from Motor Driv2 #1, which is on GP4/5
 motor_right = Motor(dirPin=4, PWMPin=5)
 
-forklift = Forklift(
-    15, # servo 1 position pin
-)
+forklift = Forklift(13)
 
 
 # Start a timer for 4 ish minutes in order to complete parking sequence within time limit
